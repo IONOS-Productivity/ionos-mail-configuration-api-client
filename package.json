@@ -1,0 +1,21 @@
+{
+  "name": "ionos-mail-configuration-api-client",
+  "version": "1.0.0",
+  "description": "IONOS Mail Configuration API Client",
+  "scripts": {
+    "generate.php": "make php"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+git@github.com:IONOS-Productivity/ionos-mail-configuration-api-client.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/IONOS-Productivity/ionos-mail-configuration-api-client/issues"
+  },
+  "homepage": "https://github.com/IONOS-Productivity/ionos-mail-configuration-api-client",
+  "devDependencies": {
+    "@openapitools/openapi-generator-cli": "^2.15.3"
+  }
+}
