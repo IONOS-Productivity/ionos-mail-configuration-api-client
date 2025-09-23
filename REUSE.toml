@@ -1,0 +1,68 @@
+version = 1
+SPDX-PackageName = "ionos-mail-configuration-api-client"
+SPDX-PackageSupplier = "STRATO GmbH"
+SPDX-PackageDownloadLocation = "NOASSERTION"
+
+# Configuration files without license headers - STRATO GmbH
+[[annotations]]
+path = [
+    "package.json",
+    "package-lock.json",
+    "psalm.xml",
+    "composer.json",
+    "composer.lock",
+    ".php-cs-fixer.dist.php",
+    ".gitignore",
+    "lib/**/*.php",
+    ".github/dependabot.yml",
+    ".ncw-mail-configuration.json",
+    ".openapi-generator/FILES",
+    ".openapi-generator/VERSION",
+    ".openapi-generator-ignore",
+    ".travis.yml",
+    "Makefile",
+    "git_push.sh",
+    "phpunit.xml.dist",
+    "pull_api_definition.sh"
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 STRATO GmbH"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+# Documentation files
+[[annotations]]
+path = [
+    "README.md",
+    "docs/**/*.md"
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 STRATO GmbH"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+# Vendor composer files in vendor-bin directories
+[[annotations]]
+path = [
+    "vendor-bin/*/composer.json",
+    "vendor-bin/*/composer.lock"
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 STRATO GmbH"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+# PHP test and template files
+[[annotations]]
+path = [
+    "openapi-generator/**/*",
+    ".openapi-generator/*",
+    "templates/**/*.php"
+]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 STRATO GmbH"
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+# REUSE configuration file
+[[annotations]]
+path = "REUSE.toml"
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2025 STRATO GmbH"
+SPDX-License-Identifier = "CC0-1.0"
