@@ -1,0 +1,14 @@
+generatorName: php
+outputDir: clients/php
+invokerPackage: IONOS\MailConfigurationAPI\Client
+gitUserId: ionos-productivity
+gitRepoId: ionos-mail-configuration-api-client
+packageName: IONOSEventConfigurationHandler
+templateDir: openapi-generator/templates/php
+variableNamingConvention: camelCase
+composerPackageName: ionos-productivity/ionos-mail-configuration-api-client
+licenseName: AGPL-3.0-or-later
+artifactUrl: https://github.com/ionos-productivity/ionos-mail-configuration-api-client/
+developerOrganization: "STRATO AG"
+developerOrganizationUrl: https://github.com/ionos-productivity/ionos-mail-configuration-api-client/
+appDescription: "Event Configuration Handler API"
