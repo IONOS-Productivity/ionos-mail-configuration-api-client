@@ -1,10 +1,10 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Event Notification Handler",
+    "title": "Event Configuration Handler",
     "description": "This is the API client for the Mail Configuration API",
     "contact": {},
-    "version": "1.0.27-SNAPSHOT"
+    "version": "2.0.0-SNAPSHOT"
   },
   "servers": [
     {
@@ -63,7 +63,14 @@
         },
         "responses": {
           "200": {
-            "description": "Mailbox created"
+            "description": "Mailbox created, returns the generated password.",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
           },
           "404": {
             "description": "Not found",
@@ -118,7 +125,7 @@
         }
       }
     },
-    "/addons/{brand}/{extRef}/mail/user": {
+    "/addons/{brand}/{extRef}/mail/{nextcloudUserId}": {
       "delete": {
         "tags": [
           "MailConfigurationAPI"
@@ -140,14 +147,6 @@
           {
             "name": "extRef",
             "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "nextcloudUsername",
-            "in": "query",
             "required": true,
             "schema": {
               "type": "string"
@@ -235,21 +234,16 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "name": "nextcloudUsername",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/PatchMailRequest"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/PatchMailRequest"
+                }
               }
             }
           },
@@ -318,10 +312,10 @@
       "MailCreateData": {
         "type": "object",
         "properties": {
-          "nextcloudUsername": {
+          "nextcloudUserId": {
             "type": "string",
-            "description": "username of the Nextcloud user account to which the mail account should be created",
-            "example": "myNextcloudUsername",
+            "description": "userid in UUID format of the Nextcloud user account to which the mail account should be created",
+            "example": "myNextcloudUserId",
             "minLength": 1
           },
           "mailaddress": {
@@ -330,26 +324,22 @@
             "example": "mylocalpart@mydomain",
             "minLength": 1
           },
-          "passwordType": {
+          "servicePassword": {
             "type": "string",
-            "description": "Password for the mail account to be created. If passwordType is SERVICE, this is the service password, it is unkown to the user and mailbox can be exlusivly used within nextcloud mail app. If passwordType is USER, this is the user password, it is known to the user and mailbox can be used with any mail client.",
-            "enum": [
-              "SERVICE",
-              "USER"
-            ],
+            "description": "password value that nextcloud instance will use",
             "minLength": 1
           },
-          "password": {
+          "userPassword": {
             "type": "string",
-            "description": "password value",
+            "description": "password value that user will use to access the mailbox outside nextcloud",
             "minLength": 1
           }
         },
         "required": [
           "mailaddress",
-          "nextcloudUsername",
-          "password",
-          "passwordType"
+          "nextcloudUserId",
+          "servicePassword",
+          "userPassword"
         ]
       },
       "ErrorMessage": {
@@ -450,7 +440,8 @@
             "type": "string",
             "enum": [
               "/mailaddress",
-              "/password"
+              "/userpassword",
+              "/servicepassword"
             ]
           },
           "value": {
