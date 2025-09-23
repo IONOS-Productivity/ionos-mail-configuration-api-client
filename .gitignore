@@ -17,3 +17,5 @@ composer.phar
 
 /.php-cs-fixer.cache
 /tests/.phpunit.cache
+
+/node_modules
