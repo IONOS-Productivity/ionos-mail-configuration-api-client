@@ -1,0 +1,1 @@
+# ionos-mail-configuration-api-client
