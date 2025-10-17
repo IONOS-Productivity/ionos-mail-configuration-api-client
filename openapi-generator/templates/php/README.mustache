@@ -1,8 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2025 STRATO GmbH
-SPDX-License-Identifier: AGPL-3.0-or-later
--->
-
 # {{packageName}}
 
 {{#appDescriptionWithNewLines}}
@@ -17,7 +12,7 @@ For more information, please visit [{{{infoUrl}}}]({{{infoUrl}}}).
 
 ### Requirements
 
-PHP 8.0+ and later.
+PHP 8.1 and later.
 
 ### Composer
 
@@ -58,6 +53,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 {{#apiInfo}}{{#apis}}{{#-first}}{{#operations}}{{#operation}}{{#-first}}
 {{> php_doc_auth_partial}}
+
 $apiInstance = new {{invokerPackage}}\Api\{{classname}}(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.

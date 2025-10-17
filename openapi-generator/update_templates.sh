@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-tag_to_clone="v7.9.0"
+tag_to_clone="v7.16.0"
 
 script_dir=$(realpath "$0" | xargs dirname)
 tmp_dir=$(mktemp -d)
