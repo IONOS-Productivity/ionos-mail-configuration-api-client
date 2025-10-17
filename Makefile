@@ -14,7 +14,7 @@ php: clean ## Generate PHP client
 	-i .ncw-mail-configuration.json \
 	-g php \
 	-o . \
-	--global-property apiTests=false,modelTests=false \
+	--global-property apiTests=true,modelTests=false \
 	--additional-properties=httpUserAgent=ionos-mail-configuration-api-client/${VERSION}/PHP \
 	-c ./openapi-generator/php_lang.yaml
 
