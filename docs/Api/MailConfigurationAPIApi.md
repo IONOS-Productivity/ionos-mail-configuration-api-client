@@ -30,6 +30,7 @@ $config = IONOS\MailConfigurationAPI\Client\Configuration::getDefaultConfigurati
               ->setPassword('YOUR_PASSWORD');
 
 
+
 $apiInstance = new IONOS\MailConfigurationAPI\Client\Api\MailConfigurationAPIApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
@@ -94,6 +95,7 @@ $config = IONOS\MailConfigurationAPI\Client\Configuration::getDefaultConfigurati
               ->setPassword('YOUR_PASSWORD');
 
 
+
 $apiInstance = new IONOS\MailConfigurationAPI\Client\Api\MailConfigurationAPIApi(
     // If you want use custom http client, pass your client which implements `GuzzleHttp\ClientInterface`.
     // This is optional, `GuzzleHttp\Client` will be used as default.
@@ -153,6 +155,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $config = IONOS\MailConfigurationAPI\Client\Configuration::getDefaultConfiguration()
               ->setUsername('YOUR_USERNAME')
               ->setPassword('YOUR_PASSWORD');
+
 
 
 $apiInstance = new IONOS\MailConfigurationAPI\Client\Api\MailConfigurationAPIApi(

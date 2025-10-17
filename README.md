@@ -3,7 +3,7 @@ SPDX-FileCopyrightText: 2025 STRATO GmbH
 SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 
-# IONOSEventConfigurationHandler
+# IONOSMailConfigurationHandler
 
 This is the API client for the Mail Configuration API
 
@@ -12,7 +12,7 @@ This is the API client for the Mail Configuration API
 
 ### Requirements
 
-PHP 8.0+ and later.
+PHP 8.1 and later.
 
 ### Composer
 
@@ -40,7 +40,7 @@ Download the files and include `autoload.php`:
 
 ```php
 <?php
-require_once('/path/to/IONOSEventConfigurationHandler/vendor/autoload.php');
+require_once('/path/to/IONOSMailConfigurationHandler/vendor/autoload.php');
 ```
 
 ## Getting Started
@@ -57,6 +57,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $config = IONOS\MailConfigurationAPI\Client\Configuration::getDefaultConfiguration()
               ->setUsername('YOUR_USERNAME')
               ->setPassword('YOUR_PASSWORD');
+
 
 
 $apiInstance = new IONOS\MailConfigurationAPI\Client\Api\MailConfigurationAPIApi(
