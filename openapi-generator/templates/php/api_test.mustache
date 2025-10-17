@@ -1,4 +1,5 @@
 <?php
+
 /**
  * {{classname}}Test
  * PHP version 8.1
@@ -22,6 +23,24 @@ namespace {{invokerPackage}}\Test\Api;
 use \{{invokerPackage}}\Configuration;
 use \{{invokerPackage}}\ApiException;
 use \{{invokerPackage}}\ObjectSerializer;
+use \{{invokerPackage}}\Api\{{classname}};
+{{#operations}}
+{{#operation}}
+{{#hasParams}}
+{{#allParams}}
+{{#isModel}}
+use {{dataType}};
+{{/isModel}}
+{{/allParams}}
+{{/hasParams}}
+{{/operation}}
+{{/operations}}
+use GuzzleHttp\Client;
+use GuzzleHttp\Handler\MockHandler;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Exception\RequestException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -34,6 +53,15 @@ use PHPUnit\Framework\TestCase;
  */
 {{#operations}}class {{classname}}Test extends TestCase
 {
+    /**
+     * @var {{classname}}
+     */
+    protected $api;
+
+    /**
+     * @var MockHandler
+     */
+    protected $mockHandler;
 
     /**
      * Setup before running any test cases
@@ -47,6 +75,11 @@ use PHPUnit\Framework\TestCase;
      */
     public function setUp(): void
     {
+        $this->mockHandler = new MockHandler();
+        $handlerStack = HandlerStack::create($this->mockHandler);
+        $client = new Client(['handler' => $handlerStack]);
+        $config = Configuration::getDefaultConfiguration();
+        $this->api = new {{classname}}($client, $config);
     }
 
     /**
@@ -72,8 +105,154 @@ use PHPUnit\Framework\TestCase;
      */
     public function test{{vendorExtensions.x-test-operation-id}}()
     {
-        // TODO: implement
-        self::markTestIncomplete('Not implemented');
+        // Mock successful response
+        {{#returnType}}
+        $responseBody = {{#isContainer}}'[{"example": "data"}]'{{/isContainer}}{{^isContainer}}{{#isString}}'{"message": "success"}'{{/isString}}{{#isPrimitiveType}}'"test"'{{/isPrimitiveType}}{{^isPrimitiveType}}{{^isString}}'{"example": "data"}'{{/isString}}{{/isPrimitiveType}}{{/isContainer}};
+        {{/returnType}}
+        {{^returnType}}
+        $responseBody = '';
+        {{/returnType}}
+        $this->mockHandler->append(new Response({{#returnType}}200{{/returnType}}{{^returnType}}204{{/returnType}}, [], $responseBody));
+
+        {{#hasParams}}
+        // Setup test parameters
+        {{#allParams}}
+        {{#isModel}}
+        ${{paramName}} = new {{dataType}}();
+        {{/isModel}}
+        {{^isModel}}
+        {{#isString}}
+        ${{paramName}} = 'test_{{paramName}}';
+        {{/isString}}
+        {{#isNumeric}}
+        ${{paramName}} = 123;
+        {{/isNumeric}}
+        {{#isBoolean}}
+        ${{paramName}} = true;
+        {{/isBoolean}}
+        {{#isContainer}}
+        ${{paramName}} = ['test_item'];
+        {{/isContainer}}
+        {{/isModel}}
+        {{/allParams}}
+
+        {{/hasParams}}
+        // Execute the API call
+        {{#returnType}}
+        $result = $this->api->{{{operationId}}}({{#hasParams}}{{#allParams}}${{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{/hasParams}});
+
+        // Verify the result
+        $this->assertNotNull($result);
+        {{#isContainer}}
+        $this->assertIsArray($result);
+        {{/isContainer}}
+        {{#isString}}
+        $this->assertIsString($result);
+        {{/isString}}
+        {{/returnType}}
+        {{^returnType}}
+        $this->api->{{{operationId}}}({{#hasParams}}{{#allParams}}${{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{/hasParams}});
+
+        // If we get here without exception, the test passes
+        $this->assertTrue(true);
+        {{/returnType}}
+    }
+
+    /**
+     * Test case for {{{operationId}}} with HTTP info
+     *
+     * {{{summary}}}.
+     *
+     */
+    public function test{{vendorExtensions.x-test-operation-id}}WithHttpInfo()
+    {
+        // Mock successful response
+        {{#returnType}}
+        $responseBody = {{#isContainer}}'[{"example": "data"}]'{{/isContainer}}{{^isContainer}}{{#isString}}'{"message": "success"}'{{/isString}}{{#isPrimitiveType}}'"test"'{{/isPrimitiveType}}{{^isPrimitiveType}}{{^isString}}'{"example": "data"}'{{/isString}}{{/isPrimitiveType}}{{/isContainer}};
+        {{/returnType}}
+        {{^returnType}}
+        $responseBody = '';
+        {{/returnType}}
+        $this->mockHandler->append(new Response({{#returnType}}200{{/returnType}}{{^returnType}}204{{/returnType}}, ['Content-Type' => 'application/json'], $responseBody));
+
+        {{#hasParams}}
+        // Setup test parameters
+        {{#allParams}}
+        {{#isModel}}
+        ${{paramName}} = new {{dataType}}();
+        {{/isModel}}
+        {{^isModel}}
+        {{#isString}}
+        ${{paramName}} = 'test_{{paramName}}';
+        {{/isString}}
+        {{#isNumeric}}
+        ${{paramName}} = 123;
+        {{/isNumeric}}
+        {{#isBoolean}}
+        ${{paramName}} = true;
+        {{/isBoolean}}
+        {{#isContainer}}
+        ${{paramName}} = ['test_item'];
+        {{/isContainer}}
+        {{/isModel}}
+        {{/allParams}}
+
+        {{/hasParams}}
+        // Execute the API call with HTTP info
+        $result = $this->api->{{{operationId}}}WithHttpInfo({{#hasParams}}{{#allParams}}${{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{/hasParams}});
+
+        // Verify the result structure
+        $this->assertIsArray($result);
+        $this->assertCount(3, $result);
+        {{#returnType}}
+        $this->assertNotNull($result[0]); // Response data
+        {{/returnType}}
+        {{^returnType}}
+        $this->assertNull($result[0]); // No response data expected
+        {{/returnType}}
+        $this->assertEquals({{#returnType}}200{{/returnType}}{{^returnType}}204{{/returnType}}, $result[1]); // Status code
+        $this->assertIsArray($result[2]); // Headers
+    }
+
+    /**
+     * Test case for {{{operationId}}} with exception
+     *
+     * {{{summary}}}.
+     *
+     */
+    public function test{{vendorExtensions.x-test-operation-id}}Exception()
+    {
+        // Mock error response
+        $this->mockHandler->append(new Response(400, [], '{"error": "Bad Request"}'));
+
+        {{#hasParams}}
+        // Setup test parameters
+        {{#allParams}}
+        {{#isModel}}
+        ${{paramName}} = new {{dataType}}();
+        {{/isModel}}
+        {{^isModel}}
+        {{#isString}}
+        ${{paramName}} = 'test_{{paramName}}';
+        {{/isString}}
+        {{#isNumeric}}
+        ${{paramName}} = 123;
+        {{/isNumeric}}
+        {{#isBoolean}}
+        ${{paramName}} = true;
+        {{/isBoolean}}
+        {{#isContainer}}
+        ${{paramName}} = ['test_item'];
+        {{/isContainer}}
+        {{/isModel}}
+        {{/allParams}}
+
+        {{/hasParams}}
+        // Expect ApiException to be thrown
+        $this->expectException(ApiException::class);
+
+        // Execute the API call
+        $this->api->{{{operationId}}}({{#hasParams}}{{#allParams}}${{paramName}}{{^-last}}, {{/-last}}{{/allParams}}{{/hasParams}});
     }
     {{/operation}}
 }
