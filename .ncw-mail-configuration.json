@@ -24,6 +24,96 @@
   ],
   "paths": {
     "/addons/{brand}/{extRef}/mail": {
+      "get": {
+        "tags": [
+          "MailConfigurationAPI"
+        ],
+        "summary": "Returns all functional mailboxes for the given brand and extRef",
+        "operationId": "getAllFunctionalAccounts",
+        "parameters": [
+          {
+            "name": "brand",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "IONOS"
+              ]
+            }
+          },
+          {
+            "name": "extRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of functional mailboxes returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MailAccountResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Duplicate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "Context State Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "MailConfigurationAPI"
@@ -64,6 +154,118 @@
         "responses": {
           "200": {
             "description": "Mailbox created, returns the generated password.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MailAccountResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Duplicate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "Context State Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/addons/{brand}/{extRef}/mail/{nextcloudUserId}/apppwd/{appname}": {
+      "post": {
+        "tags": [
+          "MailConfigurationAPI"
+        ],
+        "summary": "A new password for provided appname will be set and returned",
+        "operationId": "setAppPassword",
+        "parameters": [
+          {
+            "name": "brand",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "IONOS"
+              ]
+            }
+          },
+          {
+            "name": "extRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nextcloudUserId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "appname",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "NEXTCLOUD_WORKSPACE",
+                "NEXTCLOUD_WORKSPACE_USER"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "returns the generated password. If a password for the appname already existed it will be replaced.",
             "content": {
               "text/plain": {
                 "schema": {
@@ -123,9 +325,210 @@
             }
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "MailConfigurationAPI"
+        ],
+        "summary": "Deletes the app credentials for the given appname",
+        "operationId": "deleteAppPassword",
+        "parameters": [
+          {
+            "name": "brand",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "IONOS"
+              ]
+            }
+          },
+          {
+            "name": "extRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nextcloudUserId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "appname",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "NEXTCLOUD_WORKSPACE",
+                "NEXTCLOUD_WORKSPACE_USER"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "App credentials deleted"
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Duplicate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "Context State Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/addons/{brand}/{extRef}/mail/{nextcloudUserId}": {
+      "get": {
+        "tags": [
+          "MailConfigurationAPI"
+        ],
+        "summary": "Returns all functional mailboxes for the given brand and extRef",
+        "operationId": "getFunctionalAccount",
+        "parameters": [
+          {
+            "name": "brand",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "IONOS"
+              ]
+            }
+          },
+          {
+            "name": "extRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nextcloudUserId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "List of functional mailboxes returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MailAccountResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Duplicate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "Context State Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data provided",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
       "delete": {
         "tags": [
           "MailConfigurationAPI"
@@ -146,6 +549,14 @@
           },
           {
             "name": "extRef",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "nextcloudUserId",
             "in": "path",
             "required": true,
             "schema": {
@@ -234,16 +645,21 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "nextcloudUserId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/PatchMailRequest"
-                }
+                "$ref": "#/components/schemas/PatchMailRequest"
               }
             }
           },
@@ -318,29 +734,96 @@
             "example": "myNextcloudUserId",
             "minLength": 1
           },
-          "mailaddress": {
+          "localPart": {
             "type": "string",
-            "description": "mail address to be created",
-            "example": "mylocalpart@mydomain",
+            "description": "the local part of the mail address (without @domain.tld)",
+            "example": "hugo.van.test",
             "minLength": 1
           },
-          "servicePassword": {
+          "domainPart": {
             "type": "string",
-            "description": "password value that nextcloud instance will use",
-            "minLength": 1
-          },
-          "userPassword": {
-            "type": "string",
-            "description": "password value that user will use to access the mailbox outside nextcloud",
+            "description": "the domain part of the mail address (without local part)",
+            "example": "example.net",
             "minLength": 1
           }
         },
         "required": [
-          "mailaddress",
-          "nextcloudUserId",
-          "servicePassword",
-          "userPassword"
+          "domainPart",
+          "localPart",
+          "nextcloudUserId"
         ]
+      },
+      "Imap": {
+        "type": "object",
+        "properties": {
+          "host": {
+            "type": "string"
+          },
+          "port": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sslMode": {
+            "type": "string"
+          }
+        }
+      },
+      "MailAccountResponse": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "description": "The generated app password for the mail account.",
+            "example": "aB3x!9kLmPq2"
+          },
+          "email": {
+            "type": "string",
+            "description": "The email address of the created mail account.",
+            "example": "abc@something.net"
+          },
+          "nextcloudUserId": {
+            "type": "string",
+            "description": "The Nextcloud user ID associated with the mail account.",
+            "example": "nc_1234567890abcdef"
+          },
+          "server": {
+            "$ref": "#/components/schemas/MailServer",
+            "description": "The configuration for smtp and imap servers.",
+            "example": {
+              "smtpServer": "smtp.example.com",
+              "smtpPort": 587,
+              "imapServer": "imap.example.com",
+              "imapPort": 993,
+              "useSsl": true
+            }
+          }
+        }
+      },
+      "MailServer": {
+        "type": "object",
+        "properties": {
+          "imap": {
+            "$ref": "#/components/schemas/Imap"
+          },
+          "smtp": {
+            "$ref": "#/components/schemas/Smtp"
+          }
+        }
+      },
+      "Smtp": {
+        "type": "object",
+        "properties": {
+          "host": {
+            "type": "string"
+          },
+          "port": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sslMode": {
+            "type": "string"
+          }
+        }
       },
       "ErrorMessage": {
         "type": "object",

@@ -41,6 +41,7 @@ use \IONOS\MailConfigurationAPI\Client\ApiException;
 use \IONOS\MailConfigurationAPI\Client\ObjectSerializer;
 use \IONOS\MailConfigurationAPI\Client\Api\MailConfigurationAPIApi;
 use \IONOS\MailConfigurationAPI\Client\Model\MailCreateData;
+use \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest;
 use GuzzleHttp\Client;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\HandlerStack;
@@ -178,6 +179,84 @@ class MailConfigurationAPIApiTest extends TestCase
     }
 
     /**
+     * Test case for deleteAppPassword
+     *
+     * Deletes the app credentials for the given appname.
+     *
+     */
+    public function testDeleteAppPassword()
+    {
+        // Mock successful response
+        $responseBody = '';
+        $this->mockHandler->append(new Response(204, [], $responseBody));
+
+        // Setup test parameters
+        $brand = 'test_brand';
+        $extRef = 'test_extRef';
+        $nextcloudUserId = 'test_nextcloudUserId';
+        $appname = 'test_appname';
+
+        // Execute the API call
+        $this->api->deleteAppPassword($brand, $extRef, $nextcloudUserId, $appname);
+
+        // If we get here without exception, the test passes
+        $this->assertTrue(true);
+    }
+
+    /**
+     * Test case for deleteAppPassword with HTTP info
+     *
+     * Deletes the app credentials for the given appname.
+     *
+     */
+    public function testDeleteAppPasswordWithHttpInfo()
+    {
+        // Mock successful response
+        $responseBody = '';
+        $this->mockHandler->append(new Response(204, ['Content-Type' => 'application/json'], $responseBody));
+
+        // Setup test parameters
+        $brand = 'test_brand';
+        $extRef = 'test_extRef';
+        $nextcloudUserId = 'test_nextcloudUserId';
+        $appname = 'test_appname';
+
+        // Execute the API call with HTTP info
+        $result = $this->api->deleteAppPasswordWithHttpInfo($brand, $extRef, $nextcloudUserId, $appname);
+
+        // Verify the result structure
+        $this->assertIsArray($result);
+        $this->assertCount(3, $result);
+        $this->assertNull($result[0]); // No response data expected
+        $this->assertEquals(204, $result[1]); // Status code
+        $this->assertIsArray($result[2]); // Headers
+    }
+
+    /**
+     * Test case for deleteAppPassword with exception
+     *
+     * Deletes the app credentials for the given appname.
+     *
+     */
+    public function testDeleteAppPasswordException()
+    {
+        // Mock error response
+        $this->mockHandler->append(new Response(400, [], '{"error": "Bad Request"}'));
+
+        // Setup test parameters
+        $brand = 'test_brand';
+        $extRef = 'test_extRef';
+        $nextcloudUserId = 'test_nextcloudUserId';
+        $appname = 'test_appname';
+
+        // Expect ApiException to be thrown
+        $this->expectException(ApiException::class);
+
+        // Execute the API call
+        $this->api->deleteAppPassword($brand, $extRef, $nextcloudUserId, $appname);
+    }
+
+    /**
      * Test case for deleteMailbox
      *
      * Deletes mailbox for given nextcloud user.
@@ -192,9 +271,10 @@ class MailConfigurationAPIApiTest extends TestCase
         // Setup test parameters
         $brand = 'test_brand';
         $extRef = 'test_extRef';
+        $nextcloudUserId = 'test_nextcloudUserId';
 
         // Execute the API call
-        $this->api->deleteMailbox($brand, $extRef);
+        $this->api->deleteMailbox($brand, $extRef, $nextcloudUserId);
 
         // If we get here without exception, the test passes
         $this->assertTrue(true);
@@ -215,9 +295,10 @@ class MailConfigurationAPIApiTest extends TestCase
         // Setup test parameters
         $brand = 'test_brand';
         $extRef = 'test_extRef';
+        $nextcloudUserId = 'test_nextcloudUserId';
 
         // Execute the API call with HTTP info
-        $result = $this->api->deleteMailboxWithHttpInfo($brand, $extRef);
+        $result = $this->api->deleteMailboxWithHttpInfo($brand, $extRef, $nextcloudUserId);
 
         // Verify the result structure
         $this->assertIsArray($result);
@@ -241,12 +322,160 @@ class MailConfigurationAPIApiTest extends TestCase
         // Setup test parameters
         $brand = 'test_brand';
         $extRef = 'test_extRef';
+        $nextcloudUserId = 'test_nextcloudUserId';
 
         // Expect ApiException to be thrown
         $this->expectException(ApiException::class);
 
         // Execute the API call
-        $this->api->deleteMailbox($brand, $extRef);
+        $this->api->deleteMailbox($brand, $extRef, $nextcloudUserId);
+    }
+
+    /**
+     * Test case for getAllFunctionalAccounts
+     *
+     * Returns all functional mailboxes for the given brand and extRef.
+     *
+     */
+    public function testGetAllFunctionalAccounts()
+    {
+        // Mock successful response
+        $responseBody = '{"example": "data"}';
+        $this->mockHandler->append(new Response(200, [], $responseBody));
+
+        // Setup test parameters
+        $brand = 'test_brand';
+        $extRef = 'test_extRef';
+
+        // Execute the API call
+        $result = $this->api->getAllFunctionalAccounts($brand, $extRef);
+
+        // Verify the result
+        $this->assertNotNull($result);
+    }
+
+    /**
+     * Test case for getAllFunctionalAccounts with HTTP info
+     *
+     * Returns all functional mailboxes for the given brand and extRef.
+     *
+     */
+    public function testGetAllFunctionalAccountsWithHttpInfo()
+    {
+        // Mock successful response
+        $responseBody = '{"example": "data"}';
+        $this->mockHandler->append(new Response(200, ['Content-Type' => 'application/json'], $responseBody));
+
+        // Setup test parameters
+        $brand = 'test_brand';
+        $extRef = 'test_extRef';
+
+        // Execute the API call with HTTP info
+        $result = $this->api->getAllFunctionalAccountsWithHttpInfo($brand, $extRef);
+
+        // Verify the result structure
+        $this->assertIsArray($result);
+        $this->assertCount(3, $result);
+        $this->assertNotNull($result[0]); // Response data
+        $this->assertEquals(200, $result[1]); // Status code
+        $this->assertIsArray($result[2]); // Headers
+    }
+
+    /**
+     * Test case for getAllFunctionalAccounts with exception
+     *
+     * Returns all functional mailboxes for the given brand and extRef.
+     *
+     */
+    public function testGetAllFunctionalAccountsException()
+    {
+        // Mock error response
+        $this->mockHandler->append(new Response(400, [], '{"error": "Bad Request"}'));
+
+        // Setup test parameters
+        $brand = 'test_brand';
+        $extRef = 'test_extRef';
+
+        // Expect ApiException to be thrown
+        $this->expectException(ApiException::class);
+
+        // Execute the API call
+        $this->api->getAllFunctionalAccounts($brand, $extRef);
+    }
+
+    /**
+     * Test case for getFunctionalAccount
+     *
+     * Returns all functional mailboxes for the given brand and extRef.
+     *
+     */
+    public function testGetFunctionalAccount()
+    {
+        // Mock successful response
+        $responseBody = '{"example": "data"}';
+        $this->mockHandler->append(new Response(200, [], $responseBody));
+
+        // Setup test parameters
+        $brand = 'test_brand';
+        $extRef = 'test_extRef';
+        $nextcloudUserId = 'test_nextcloudUserId';
+
+        // Execute the API call
+        $result = $this->api->getFunctionalAccount($brand, $extRef, $nextcloudUserId);
+
+        // Verify the result
+        $this->assertNotNull($result);
+    }
+
+    /**
+     * Test case for getFunctionalAccount with HTTP info
+     *
+     * Returns all functional mailboxes for the given brand and extRef.
+     *
+     */
+    public function testGetFunctionalAccountWithHttpInfo()
+    {
+        // Mock successful response
+        $responseBody = '{"example": "data"}';
+        $this->mockHandler->append(new Response(200, ['Content-Type' => 'application/json'], $responseBody));
+
+        // Setup test parameters
+        $brand = 'test_brand';
+        $extRef = 'test_extRef';
+        $nextcloudUserId = 'test_nextcloudUserId';
+
+        // Execute the API call with HTTP info
+        $result = $this->api->getFunctionalAccountWithHttpInfo($brand, $extRef, $nextcloudUserId);
+
+        // Verify the result structure
+        $this->assertIsArray($result);
+        $this->assertCount(3, $result);
+        $this->assertNotNull($result[0]); // Response data
+        $this->assertEquals(200, $result[1]); // Status code
+        $this->assertIsArray($result[2]); // Headers
+    }
+
+    /**
+     * Test case for getFunctionalAccount with exception
+     *
+     * Returns all functional mailboxes for the given brand and extRef.
+     *
+     */
+    public function testGetFunctionalAccountException()
+    {
+        // Mock error response
+        $this->mockHandler->append(new Response(400, [], '{"error": "Bad Request"}'));
+
+        // Setup test parameters
+        $brand = 'test_brand';
+        $extRef = 'test_extRef';
+        $nextcloudUserId = 'test_nextcloudUserId';
+
+        // Expect ApiException to be thrown
+        $this->expectException(ApiException::class);
+
+        // Execute the API call
+        $this->api->getFunctionalAccount($brand, $extRef, $nextcloudUserId);
     }
 
     /**
@@ -264,10 +493,11 @@ class MailConfigurationAPIApiTest extends TestCase
         // Setup test parameters
         $brand = 'test_brand';
         $extRef = 'test_extRef';
-        $patchMailRequest = ['test_item'];
+        $nextcloudUserId = 'test_nextcloudUserId';
+        $patchMailRequest = new \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest();
 
         // Execute the API call
-        $this->api->patchMailbox($brand, $extRef, $patchMailRequest);
+        $this->api->patchMailbox($brand, $extRef, $nextcloudUserId, $patchMailRequest);
 
         // If we get here without exception, the test passes
         $this->assertTrue(true);
@@ -288,10 +518,11 @@ class MailConfigurationAPIApiTest extends TestCase
         // Setup test parameters
         $brand = 'test_brand';
         $extRef = 'test_extRef';
-        $patchMailRequest = ['test_item'];
+        $nextcloudUserId = 'test_nextcloudUserId';
+        $patchMailRequest = new \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest();
 
         // Execute the API call with HTTP info
-        $result = $this->api->patchMailboxWithHttpInfo($brand, $extRef, $patchMailRequest);
+        $result = $this->api->patchMailboxWithHttpInfo($brand, $extRef, $nextcloudUserId, $patchMailRequest);
 
         // Verify the result structure
         $this->assertIsArray($result);
@@ -315,12 +546,91 @@ class MailConfigurationAPIApiTest extends TestCase
         // Setup test parameters
         $brand = 'test_brand';
         $extRef = 'test_extRef';
-        $patchMailRequest = ['test_item'];
+        $nextcloudUserId = 'test_nextcloudUserId';
+        $patchMailRequest = new \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest();
 
         // Expect ApiException to be thrown
         $this->expectException(ApiException::class);
 
         // Execute the API call
-        $this->api->patchMailbox($brand, $extRef, $patchMailRequest);
+        $this->api->patchMailbox($brand, $extRef, $nextcloudUserId, $patchMailRequest);
+    }
+
+    /**
+     * Test case for setAppPassword
+     *
+     * A new password for provided appname will be set and returned.
+     *
+     */
+    public function testSetAppPassword()
+    {
+        // Mock successful response
+        $responseBody = '{"example": "data"}';
+        $this->mockHandler->append(new Response(200, [], $responseBody));
+
+        // Setup test parameters
+        $brand = 'test_brand';
+        $extRef = 'test_extRef';
+        $nextcloudUserId = 'test_nextcloudUserId';
+        $appname = 'test_appname';
+
+        // Execute the API call
+        $result = $this->api->setAppPassword($brand, $extRef, $nextcloudUserId, $appname);
+
+        // Verify the result
+        $this->assertNotNull($result);
+    }
+
+    /**
+     * Test case for setAppPassword with HTTP info
+     *
+     * A new password for provided appname will be set and returned.
+     *
+     */
+    public function testSetAppPasswordWithHttpInfo()
+    {
+        // Mock successful response
+        $responseBody = '{"example": "data"}';
+        $this->mockHandler->append(new Response(200, ['Content-Type' => 'application/json'], $responseBody));
+
+        // Setup test parameters
+        $brand = 'test_brand';
+        $extRef = 'test_extRef';
+        $nextcloudUserId = 'test_nextcloudUserId';
+        $appname = 'test_appname';
+
+        // Execute the API call with HTTP info
+        $result = $this->api->setAppPasswordWithHttpInfo($brand, $extRef, $nextcloudUserId, $appname);
+
+        // Verify the result structure
+        $this->assertIsArray($result);
+        $this->assertCount(3, $result);
+        $this->assertNotNull($result[0]); // Response data
+        $this->assertEquals(200, $result[1]); // Status code
+        $this->assertIsArray($result[2]); // Headers
+    }
+
+    /**
+     * Test case for setAppPassword with exception
+     *
+     * A new password for provided appname will be set and returned.
+     *
+     */
+    public function testSetAppPasswordException()
+    {
+        // Mock error response
+        $this->mockHandler->append(new Response(400, [], '{"error": "Bad Request"}'));
+
+        // Setup test parameters
+        $brand = 'test_brand';
+        $extRef = 'test_extRef';
+        $nextcloudUserId = 'test_nextcloudUserId';
+        $appname = 'test_appname';
+
+        // Expect ApiException to be thrown
+        $this->expectException(ApiException::class);
+
+        // Execute the API call
+        $this->api->setAppPassword($brand, $extRef, $nextcloudUserId, $appname);
     }
 }
