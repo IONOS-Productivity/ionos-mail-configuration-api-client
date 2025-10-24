@@ -86,14 +86,22 @@ All URIs are relative to *http://localhost:8080*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *MailConfigurationAPIApi* | [**createMailbox**](docs/Api/MailConfigurationAPIApi.md#createmailbox) | **POST** /addons/{brand}/{extRef}/mail | Creates a mailbox on IONOS plattform that is used for nextcloud user
+*MailConfigurationAPIApi* | [**deleteAppPassword**](docs/Api/MailConfigurationAPIApi.md#deleteapppassword) | **DELETE** /addons/{brand}/{extRef}/mail/{nextcloudUserId}/apppwd/{appname} | Deletes the app credentials for the given appname
 *MailConfigurationAPIApi* | [**deleteMailbox**](docs/Api/MailConfigurationAPIApi.md#deletemailbox) | **DELETE** /addons/{brand}/{extRef}/mail/{nextcloudUserId} | Deletes mailbox for given nextcloud user
+*MailConfigurationAPIApi* | [**getAllFunctionalAccounts**](docs/Api/MailConfigurationAPIApi.md#getallfunctionalaccounts) | **GET** /addons/{brand}/{extRef}/mail | Returns all functional mailboxes for the given brand and extRef
+*MailConfigurationAPIApi* | [**getFunctionalAccount**](docs/Api/MailConfigurationAPIApi.md#getfunctionalaccount) | **GET** /addons/{brand}/{extRef}/mail/{nextcloudUserId} | Returns all functional mailboxes for the given brand and extRef
 *MailConfigurationAPIApi* | [**patchMailbox**](docs/Api/MailConfigurationAPIApi.md#patchmailbox) | **PATCH** /addons/{brand}/{extRef}/mail/{nextcloudUserId} | update maildata
+*MailConfigurationAPIApi* | [**setAppPassword**](docs/Api/MailConfigurationAPIApi.md#setapppassword) | **POST** /addons/{brand}/{extRef}/mail/{nextcloudUserId}/apppwd/{appname} | A new password for provided appname will be set and returned
 
 ## Models
 
 - [ErrorMessage](docs/Model/ErrorMessage.md)
+- [Imap](docs/Model/Imap.md)
+- [MailAccountResponse](docs/Model/MailAccountResponse.md)
 - [MailCreateData](docs/Model/MailCreateData.md)
+- [MailServer](docs/Model/MailServer.md)
 - [PatchMailRequest](docs/Model/PatchMailRequest.md)
+- [Smtp](docs/Model/Smtp.md)
 
 ## Authorization
 

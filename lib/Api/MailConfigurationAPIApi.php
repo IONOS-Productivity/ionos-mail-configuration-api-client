@@ -86,10 +86,22 @@ class MailConfigurationAPIApi
         'createMailbox' => [
             'application/json',
         ],
+        'deleteAppPassword' => [
+            'application/json',
+        ],
         'deleteMailbox' => [
             'application/json',
         ],
+        'getAllFunctionalAccounts' => [
+            'application/json',
+        ],
+        'getFunctionalAccount' => [
+            'application/json',
+        ],
         'patchMailbox' => [
+            'application/json',
+        ],
+        'setAppPassword' => [
             'application/json',
         ],
     ];
@@ -152,7 +164,7 @@ class MailConfigurationAPIApi
      *
      * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return string|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage
+     * @return \IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage
      */
     public function createMailbox($brand, $extRef, $mailCreateData, string $contentType = self::contentTypes['createMailbox'][0])
     {
@@ -172,11 +184,2083 @@ class MailConfigurationAPIApi
      *
      * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of string|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage, HTTP status code, HTTP response headers (array of strings)
      */
     public function createMailboxWithHttpInfo($brand, $extRef, $mailCreateData, string $contentType = self::contentTypes['createMailbox'][0])
     {
         $request = $this->createMailboxRequest($brand, $extRef, $mailCreateData, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch ($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse',
+                        $request,
+                        $response,
+                    );
+                case 404:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+                case 409:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+                case 412:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+                case 500:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+            }
+
+
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 412:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation createMailboxAsync
+     *
+     * Creates a mailbox on IONOS plattform that is used for nextcloud user
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  \IONOS\MailConfigurationAPI\Client\Model\MailCreateData $mailCreateData (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createMailbox'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createMailboxAsync($brand, $extRef, $mailCreateData, string $contentType = self::contentTypes['createMailbox'][0])
+    {
+        return $this->createMailboxAsyncWithHttpInfo($brand, $extRef, $mailCreateData, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation createMailboxAsyncWithHttpInfo
+     *
+     * Creates a mailbox on IONOS plattform that is used for nextcloud user
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  \IONOS\MailConfigurationAPI\Client\Model\MailCreateData $mailCreateData (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createMailbox'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function createMailboxAsyncWithHttpInfo($brand, $extRef, $mailCreateData, string $contentType = self::contentTypes['createMailbox'][0])
+    {
+        $returnType = '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse';
+        $request = $this->createMailboxRequest($brand, $extRef, $mailCreateData, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'createMailbox'
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  \IONOS\MailConfigurationAPI\Client\Model\MailCreateData $mailCreateData (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createMailbox'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function createMailboxRequest($brand, $extRef, $mailCreateData, string $contentType = self::contentTypes['createMailbox'][0])
+    {
+
+        // verify the required parameter 'brand' is set
+        if ($brand === null || (is_array($brand) && count($brand) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $brand when calling createMailbox'
+            );
+        }
+
+        // verify the required parameter 'extRef' is set
+        if ($extRef === null || (is_array($extRef) && count($extRef) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $extRef when calling createMailbox'
+            );
+        }
+
+        // verify the required parameter 'mailCreateData' is set
+        if ($mailCreateData === null || (is_array($mailCreateData) && count($mailCreateData) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $mailCreateData when calling createMailbox'
+            );
+        }
+
+
+        $resourcePath = '/addons/{brand}/{extRef}/mail';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($brand !== null) {
+            $resourcePath = str_replace(
+                '{' . 'brand' . '}',
+                ObjectSerializer::toPathValue($brand),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($extRef !== null) {
+            $resourcePath = str_replace(
+                '{' . 'extRef' . '}',
+                ObjectSerializer::toPathValue($extRef),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($mailCreateData)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($mailCreateData));
+            } else {
+                $httpBody = $mailCreateData;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires HTTP basic authentication
+        if (!empty($this->config->getUsername()) || !(empty($this->config->getPassword()))) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'POST',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation deleteAppPassword
+     *
+     * Deletes the app credentials for the given appname
+     *
+     * @param  string $brand brand (required)
+     * @param  string $extRef extRef (required)
+     * @param  string $nextcloudUserId nextcloudUserId (required)
+     * @param  string $appname appname (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAppPassword'] to see the possible values for this operation
+     *
+     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function deleteAppPassword($brand, $extRef, $nextcloudUserId, $appname, string $contentType = self::contentTypes['deleteAppPassword'][0])
+    {
+        $this->deleteAppPasswordWithHttpInfo($brand, $extRef, $nextcloudUserId, $appname, $contentType);
+    }
+
+    /**
+     * Operation deleteAppPasswordWithHttpInfo
+     *
+     * Deletes the app credentials for the given appname
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  string $appname (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAppPassword'] to see the possible values for this operation
+     *
+     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function deleteAppPasswordWithHttpInfo($brand, $extRef, $nextcloudUserId, $appname, string $contentType = self::contentTypes['deleteAppPassword'][0])
+    {
+        $request = $this->deleteAppPasswordRequest($brand, $extRef, $nextcloudUserId, $appname, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 412:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation deleteAppPasswordAsync
+     *
+     * Deletes the app credentials for the given appname
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  string $appname (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAppPassword'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteAppPasswordAsync($brand, $extRef, $nextcloudUserId, $appname, string $contentType = self::contentTypes['deleteAppPassword'][0])
+    {
+        return $this->deleteAppPasswordAsyncWithHttpInfo($brand, $extRef, $nextcloudUserId, $appname, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation deleteAppPasswordAsyncWithHttpInfo
+     *
+     * Deletes the app credentials for the given appname
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  string $appname (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAppPassword'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteAppPasswordAsyncWithHttpInfo($brand, $extRef, $nextcloudUserId, $appname, string $contentType = self::contentTypes['deleteAppPassword'][0])
+    {
+        $returnType = '';
+        $request = $this->deleteAppPasswordRequest($brand, $extRef, $nextcloudUserId, $appname, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'deleteAppPassword'
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  string $appname (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteAppPassword'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function deleteAppPasswordRequest($brand, $extRef, $nextcloudUserId, $appname, string $contentType = self::contentTypes['deleteAppPassword'][0])
+    {
+
+        // verify the required parameter 'brand' is set
+        if ($brand === null || (is_array($brand) && count($brand) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $brand when calling deleteAppPassword'
+            );
+        }
+
+        // verify the required parameter 'extRef' is set
+        if ($extRef === null || (is_array($extRef) && count($extRef) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $extRef when calling deleteAppPassword'
+            );
+        }
+
+        // verify the required parameter 'nextcloudUserId' is set
+        if ($nextcloudUserId === null || (is_array($nextcloudUserId) && count($nextcloudUserId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $nextcloudUserId when calling deleteAppPassword'
+            );
+        }
+
+        // verify the required parameter 'appname' is set
+        if ($appname === null || (is_array($appname) && count($appname) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $appname when calling deleteAppPassword'
+            );
+        }
+
+
+        $resourcePath = '/addons/{brand}/{extRef}/mail/{nextcloudUserId}/apppwd/{appname}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($brand !== null) {
+            $resourcePath = str_replace(
+                '{' . 'brand' . '}',
+                ObjectSerializer::toPathValue($brand),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($extRef !== null) {
+            $resourcePath = str_replace(
+                '{' . 'extRef' . '}',
+                ObjectSerializer::toPathValue($extRef),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($nextcloudUserId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'nextcloudUserId' . '}',
+                ObjectSerializer::toPathValue($nextcloudUserId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($appname !== null) {
+            $resourcePath = str_replace(
+                '{' . 'appname' . '}',
+                ObjectSerializer::toPathValue($appname),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires HTTP basic authentication
+        if (!empty($this->config->getUsername()) || !(empty($this->config->getPassword()))) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'DELETE',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation deleteMailbox
+     *
+     * Deletes mailbox for given nextcloud user
+     *
+     * @param  string $brand brand (required)
+     * @param  string $extRef extRef (required)
+     * @param  string $nextcloudUserId nextcloudUserId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteMailbox'] to see the possible values for this operation
+     *
+     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function deleteMailbox($brand, $extRef, $nextcloudUserId, string $contentType = self::contentTypes['deleteMailbox'][0])
+    {
+        $this->deleteMailboxWithHttpInfo($brand, $extRef, $nextcloudUserId, $contentType);
+    }
+
+    /**
+     * Operation deleteMailboxWithHttpInfo
+     *
+     * Deletes mailbox for given nextcloud user
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteMailbox'] to see the possible values for this operation
+     *
+     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function deleteMailboxWithHttpInfo($brand, $extRef, $nextcloudUserId, string $contentType = self::contentTypes['deleteMailbox'][0])
+    {
+        $request = $this->deleteMailboxRequest($brand, $extRef, $nextcloudUserId, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 412:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation deleteMailboxAsync
+     *
+     * Deletes mailbox for given nextcloud user
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteMailbox'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteMailboxAsync($brand, $extRef, $nextcloudUserId, string $contentType = self::contentTypes['deleteMailbox'][0])
+    {
+        return $this->deleteMailboxAsyncWithHttpInfo($brand, $extRef, $nextcloudUserId, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation deleteMailboxAsyncWithHttpInfo
+     *
+     * Deletes mailbox for given nextcloud user
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteMailbox'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function deleteMailboxAsyncWithHttpInfo($brand, $extRef, $nextcloudUserId, string $contentType = self::contentTypes['deleteMailbox'][0])
+    {
+        $returnType = '';
+        $request = $this->deleteMailboxRequest($brand, $extRef, $nextcloudUserId, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'deleteMailbox'
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteMailbox'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function deleteMailboxRequest($brand, $extRef, $nextcloudUserId, string $contentType = self::contentTypes['deleteMailbox'][0])
+    {
+
+        // verify the required parameter 'brand' is set
+        if ($brand === null || (is_array($brand) && count($brand) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $brand when calling deleteMailbox'
+            );
+        }
+
+        // verify the required parameter 'extRef' is set
+        if ($extRef === null || (is_array($extRef) && count($extRef) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $extRef when calling deleteMailbox'
+            );
+        }
+
+        // verify the required parameter 'nextcloudUserId' is set
+        if ($nextcloudUserId === null || (is_array($nextcloudUserId) && count($nextcloudUserId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $nextcloudUserId when calling deleteMailbox'
+            );
+        }
+
+
+        $resourcePath = '/addons/{brand}/{extRef}/mail/{nextcloudUserId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($brand !== null) {
+            $resourcePath = str_replace(
+                '{' . 'brand' . '}',
+                ObjectSerializer::toPathValue($brand),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($extRef !== null) {
+            $resourcePath = str_replace(
+                '{' . 'extRef' . '}',
+                ObjectSerializer::toPathValue($extRef),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($nextcloudUserId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'nextcloudUserId' . '}',
+                ObjectSerializer::toPathValue($nextcloudUserId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires HTTP basic authentication
+        if (!empty($this->config->getUsername()) || !(empty($this->config->getPassword()))) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'DELETE',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getAllFunctionalAccounts
+     *
+     * Returns all functional mailboxes for the given brand and extRef
+     *
+     * @param  string $brand brand (required)
+     * @param  string $extRef extRef (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllFunctionalAccounts'] to see the possible values for this operation
+     *
+     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage
+     */
+    public function getAllFunctionalAccounts($brand, $extRef, string $contentType = self::contentTypes['getAllFunctionalAccounts'][0])
+    {
+        list($response) = $this->getAllFunctionalAccountsWithHttpInfo($brand, $extRef, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getAllFunctionalAccountsWithHttpInfo
+     *
+     * Returns all functional mailboxes for the given brand and extRef
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllFunctionalAccounts'] to see the possible values for this operation
+     *
+     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getAllFunctionalAccountsWithHttpInfo($brand, $extRef, string $contentType = self::contentTypes['getAllFunctionalAccounts'][0])
+    {
+        $request = $this->getAllFunctionalAccountsRequest($brand, $extRef, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch ($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse',
+                        $request,
+                        $response,
+                    );
+                case 404:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+                case 409:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+                case 412:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+                case 500:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+            }
+
+
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 412:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getAllFunctionalAccountsAsync
+     *
+     * Returns all functional mailboxes for the given brand and extRef
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllFunctionalAccounts'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getAllFunctionalAccountsAsync($brand, $extRef, string $contentType = self::contentTypes['getAllFunctionalAccounts'][0])
+    {
+        return $this->getAllFunctionalAccountsAsyncWithHttpInfo($brand, $extRef, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getAllFunctionalAccountsAsyncWithHttpInfo
+     *
+     * Returns all functional mailboxes for the given brand and extRef
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllFunctionalAccounts'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getAllFunctionalAccountsAsyncWithHttpInfo($brand, $extRef, string $contentType = self::contentTypes['getAllFunctionalAccounts'][0])
+    {
+        $returnType = '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse';
+        $request = $this->getAllFunctionalAccountsRequest($brand, $extRef, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getAllFunctionalAccounts'
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getAllFunctionalAccounts'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getAllFunctionalAccountsRequest($brand, $extRef, string $contentType = self::contentTypes['getAllFunctionalAccounts'][0])
+    {
+
+        // verify the required parameter 'brand' is set
+        if ($brand === null || (is_array($brand) && count($brand) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $brand when calling getAllFunctionalAccounts'
+            );
+        }
+
+        // verify the required parameter 'extRef' is set
+        if ($extRef === null || (is_array($extRef) && count($extRef) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $extRef when calling getAllFunctionalAccounts'
+            );
+        }
+
+
+        $resourcePath = '/addons/{brand}/{extRef}/mail';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($brand !== null) {
+            $resourcePath = str_replace(
+                '{' . 'brand' . '}',
+                ObjectSerializer::toPathValue($brand),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($extRef !== null) {
+            $resourcePath = str_replace(
+                '{' . 'extRef' . '}',
+                ObjectSerializer::toPathValue($extRef),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires HTTP basic authentication
+        if (!empty($this->config->getUsername()) || !(empty($this->config->getPassword()))) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation getFunctionalAccount
+     *
+     * Returns all functional mailboxes for the given brand and extRef
+     *
+     * @param  string $brand brand (required)
+     * @param  string $extRef extRef (required)
+     * @param  string $nextcloudUserId nextcloudUserId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getFunctionalAccount'] to see the possible values for this operation
+     *
+     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return \IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage
+     */
+    public function getFunctionalAccount($brand, $extRef, $nextcloudUserId, string $contentType = self::contentTypes['getFunctionalAccount'][0])
+    {
+        list($response) = $this->getFunctionalAccountWithHttpInfo($brand, $extRef, $nextcloudUserId, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation getFunctionalAccountWithHttpInfo
+     *
+     * Returns all functional mailboxes for the given brand and extRef
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getFunctionalAccount'] to see the possible values for this operation
+     *
+     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of \IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function getFunctionalAccountWithHttpInfo($brand, $extRef, $nextcloudUserId, string $contentType = self::contentTypes['getFunctionalAccount'][0])
+    {
+        $request = $this->getFunctionalAccountRequest($brand, $extRef, $nextcloudUserId, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            switch ($statusCode) {
+                case 200:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse',
+                        $request,
+                        $response,
+                    );
+                case 404:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+                case 409:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+                case 412:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+                case 400:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+                case 500:
+                    return $this->handleResponseWithDataType(
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $request,
+                        $response,
+                    );
+            }
+
+
+
+            if ($statusCode < 200 || $statusCode > 299) {
+                throw new ApiException(
+                    sprintf(
+                        '[%d] Error connecting to the API (%s)',
+                        $statusCode,
+                        (string) $request->getUri()
+                    ),
+                    $statusCode,
+                    $response->getHeaders(),
+                    (string) $response->getBody()
+                );
+            }
+
+            return $this->handleResponseWithDataType(
+                '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse',
+                $request,
+                $response,
+            );
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 200:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 412:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation getFunctionalAccountAsync
+     *
+     * Returns all functional mailboxes for the given brand and extRef
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getFunctionalAccount'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getFunctionalAccountAsync($brand, $extRef, $nextcloudUserId, string $contentType = self::contentTypes['getFunctionalAccount'][0])
+    {
+        return $this->getFunctionalAccountAsyncWithHttpInfo($brand, $extRef, $nextcloudUserId, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation getFunctionalAccountAsyncWithHttpInfo
+     *
+     * Returns all functional mailboxes for the given brand and extRef
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getFunctionalAccount'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function getFunctionalAccountAsyncWithHttpInfo($brand, $extRef, $nextcloudUserId, string $contentType = self::contentTypes['getFunctionalAccount'][0])
+    {
+        $returnType = '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse';
+        $request = $this->getFunctionalAccountRequest($brand, $extRef, $nextcloudUserId, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    if ($returnType === '\SplFileObject') {
+                        $content = $response->getBody(); //stream goes to serializer
+                    } else {
+                        $content = (string) $response->getBody();
+                        if ($returnType !== 'string') {
+                            $content = json_decode($content);
+                        }
+                    }
+
+                    return [
+                        ObjectSerializer::deserialize($content, $returnType, []),
+                        $response->getStatusCode(),
+                        $response->getHeaders()
+                    ];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'getFunctionalAccount'
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['getFunctionalAccount'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function getFunctionalAccountRequest($brand, $extRef, $nextcloudUserId, string $contentType = self::contentTypes['getFunctionalAccount'][0])
+    {
+
+        // verify the required parameter 'brand' is set
+        if ($brand === null || (is_array($brand) && count($brand) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $brand when calling getFunctionalAccount'
+            );
+        }
+
+        // verify the required parameter 'extRef' is set
+        if ($extRef === null || (is_array($extRef) && count($extRef) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $extRef when calling getFunctionalAccount'
+            );
+        }
+
+        // verify the required parameter 'nextcloudUserId' is set
+        if ($nextcloudUserId === null || (is_array($nextcloudUserId) && count($nextcloudUserId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $nextcloudUserId when calling getFunctionalAccount'
+            );
+        }
+
+
+        $resourcePath = '/addons/{brand}/{extRef}/mail/{nextcloudUserId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($brand !== null) {
+            $resourcePath = str_replace(
+                '{' . 'brand' . '}',
+                ObjectSerializer::toPathValue($brand),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($extRef !== null) {
+            $resourcePath = str_replace(
+                '{' . 'extRef' . '}',
+                ObjectSerializer::toPathValue($extRef),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($nextcloudUserId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'nextcloudUserId' . '}',
+                ObjectSerializer::toPathValue($nextcloudUserId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires HTTP basic authentication
+        if (!empty($this->config->getUsername()) || !(empty($this->config->getPassword()))) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'GET',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation patchMailbox
+     *
+     * update maildata
+     *
+     * @param  string $brand brand (required)
+     * @param  string $extRef extRef (required)
+     * @param  string $nextcloudUserId nextcloudUserId (required)
+     * @param  \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest $patchMailRequest patchMailRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchMailbox'] to see the possible values for this operation
+     *
+     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return void
+     */
+    public function patchMailbox($brand, $extRef, $nextcloudUserId, $patchMailRequest, string $contentType = self::contentTypes['patchMailbox'][0])
+    {
+        $this->patchMailboxWithHttpInfo($brand, $extRef, $nextcloudUserId, $patchMailRequest, $contentType);
+    }
+
+    /**
+     * Operation patchMailboxWithHttpInfo
+     *
+     * update maildata
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest $patchMailRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchMailbox'] to see the possible values for this operation
+     *
+     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of null, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function patchMailboxWithHttpInfo($brand, $extRef, $nextcloudUserId, $patchMailRequest, string $contentType = self::contentTypes['patchMailbox'][0])
+    {
+        $request = $this->patchMailboxRequest($brand, $extRef, $nextcloudUserId, $patchMailRequest, $contentType);
+
+        try {
+            $options = $this->createHttpClientOption();
+            try {
+                $response = $this->client->send($request, $options);
+            } catch (RequestException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
+                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
+                );
+            } catch (ConnectException $e) {
+                throw new ApiException(
+                    "[{$e->getCode()}] {$e->getMessage()}",
+                    (int) $e->getCode(),
+                    null,
+                    null
+                );
+            }
+
+            $statusCode = $response->getStatusCode();
+
+
+            return [null, $statusCode, $response->getHeaders()];
+        } catch (ApiException $e) {
+            switch ($e->getCode()) {
+                case 404:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 409:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 412:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 400:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+                case 500:
+                    $data = ObjectSerializer::deserialize(
+                        $e->getResponseBody(),
+                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
+                        $e->getResponseHeaders()
+                    );
+                    $e->setResponseObject($data);
+                    throw $e;
+            }
+
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Operation patchMailboxAsync
+     *
+     * update maildata
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest $patchMailRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchMailbox'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function patchMailboxAsync($brand, $extRef, $nextcloudUserId, $patchMailRequest, string $contentType = self::contentTypes['patchMailbox'][0])
+    {
+        return $this->patchMailboxAsyncWithHttpInfo($brand, $extRef, $nextcloudUserId, $patchMailRequest, $contentType)
+            ->then(
+                function ($response) {
+                    return $response[0];
+                }
+            );
+    }
+
+    /**
+     * Operation patchMailboxAsyncWithHttpInfo
+     *
+     * update maildata
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest $patchMailRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchMailbox'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Promise\PromiseInterface
+     */
+    public function patchMailboxAsyncWithHttpInfo($brand, $extRef, $nextcloudUserId, $patchMailRequest, string $contentType = self::contentTypes['patchMailbox'][0])
+    {
+        $returnType = '';
+        $request = $this->patchMailboxRequest($brand, $extRef, $nextcloudUserId, $patchMailRequest, $contentType);
+
+        return $this->client
+            ->sendAsync($request, $this->createHttpClientOption())
+            ->then(
+                function ($response) use ($returnType) {
+                    return [null, $response->getStatusCode(), $response->getHeaders()];
+                },
+                function ($exception) {
+                    $response = $exception->getResponse();
+                    $statusCode = $response->getStatusCode();
+                    throw new ApiException(
+                        sprintf(
+                            '[%d] Error connecting to the API (%s)',
+                            $statusCode,
+                            $exception->getRequest()->getUri()
+                        ),
+                        $statusCode,
+                        $response->getHeaders(),
+                        (string) $response->getBody()
+                    );
+                }
+            );
+    }
+
+    /**
+     * Create request for operation 'patchMailbox'
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest $patchMailRequest (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchMailbox'] to see the possible values for this operation
+     *
+     * @throws \InvalidArgumentException
+     * @return \GuzzleHttp\Psr7\Request
+     */
+    public function patchMailboxRequest($brand, $extRef, $nextcloudUserId, $patchMailRequest, string $contentType = self::contentTypes['patchMailbox'][0])
+    {
+
+        // verify the required parameter 'brand' is set
+        if ($brand === null || (is_array($brand) && count($brand) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $brand when calling patchMailbox'
+            );
+        }
+
+        // verify the required parameter 'extRef' is set
+        if ($extRef === null || (is_array($extRef) && count($extRef) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $extRef when calling patchMailbox'
+            );
+        }
+
+        // verify the required parameter 'nextcloudUserId' is set
+        if ($nextcloudUserId === null || (is_array($nextcloudUserId) && count($nextcloudUserId) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $nextcloudUserId when calling patchMailbox'
+            );
+        }
+
+        // verify the required parameter 'patchMailRequest' is set
+        if ($patchMailRequest === null || (is_array($patchMailRequest) && count($patchMailRequest) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $patchMailRequest when calling patchMailbox'
+            );
+        }
+
+
+        $resourcePath = '/addons/{brand}/{extRef}/mail/{nextcloudUserId}';
+        $formParams = [];
+        $queryParams = [];
+        $headerParams = [];
+        $httpBody = '';
+        $multipart = false;
+
+
+
+        // path params
+        if ($brand !== null) {
+            $resourcePath = str_replace(
+                '{' . 'brand' . '}',
+                ObjectSerializer::toPathValue($brand),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($extRef !== null) {
+            $resourcePath = str_replace(
+                '{' . 'extRef' . '}',
+                ObjectSerializer::toPathValue($extRef),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($nextcloudUserId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'nextcloudUserId' . '}',
+                ObjectSerializer::toPathValue($nextcloudUserId),
+                $resourcePath
+            );
+        }
+
+
+        $headers = $this->headerSelector->selectHeaders(
+            ['application/json', ],
+            $contentType,
+            $multipart
+        );
+
+        // for model (json/xml)
+        if (isset($patchMailRequest)) {
+            if (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the body
+                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($patchMailRequest));
+            } else {
+                $httpBody = $patchMailRequest;
+            }
+        } elseif (count($formParams) > 0) {
+            if ($multipart) {
+                $multipartContents = [];
+                foreach ($formParams as $formParamName => $formParamValue) {
+                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
+                    foreach ($formParamValueItems as $formParamValueItem) {
+                        $multipartContents[] = [
+                            'name' => $formParamName,
+                            'contents' => $formParamValueItem
+                        ];
+                    }
+                }
+                // for HTTP post (form)
+                $httpBody = new MultipartStream($multipartContents);
+
+            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
+                # if Content-Type contains "application/json", json_encode the form parameters
+                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
+            } else {
+                // for HTTP post (form)
+                $httpBody = ObjectSerializer::buildQuery($formParams);
+            }
+        }
+
+        // this endpoint requires HTTP basic authentication
+        if (!empty($this->config->getUsername()) || !(empty($this->config->getPassword()))) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
+        }
+
+        $defaultHeaders = [];
+        if ($this->config->getUserAgent()) {
+            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
+        }
+
+        $headers = array_merge(
+            $defaultHeaders,
+            $headerParams,
+            $headers
+        );
+
+        $operationHost = $this->config->getHost();
+        $query = ObjectSerializer::buildQuery($queryParams);
+        return new Request(
+            'PATCH',
+            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
+            $headers,
+            $httpBody
+        );
+    }
+
+    /**
+     * Operation setAppPassword
+     *
+     * A new password for provided appname will be set and returned
+     *
+     * @param  string $brand brand (required)
+     * @param  string $extRef extRef (required)
+     * @param  string $nextcloudUserId nextcloudUserId (required)
+     * @param  string $appname appname (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setAppPassword'] to see the possible values for this operation
+     *
+     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return string|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage
+     */
+    public function setAppPassword($brand, $extRef, $nextcloudUserId, $appname, string $contentType = self::contentTypes['setAppPassword'][0])
+    {
+        list($response) = $this->setAppPasswordWithHttpInfo($brand, $extRef, $nextcloudUserId, $appname, $contentType);
+        return $response;
+    }
+
+    /**
+     * Operation setAppPasswordWithHttpInfo
+     *
+     * A new password for provided appname will be set and returned
+     *
+     * @param  string $brand (required)
+     * @param  string $extRef (required)
+     * @param  string $nextcloudUserId (required)
+     * @param  string $appname (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setAppPassword'] to see the possible values for this operation
+     *
+     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
+     * @throws \InvalidArgumentException
+     * @return array of string|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage, HTTP status code, HTTP response headers (array of strings)
+     */
+    public function setAppPasswordWithHttpInfo($brand, $extRef, $nextcloudUserId, $appname, string $contentType = self::contentTypes['setAppPassword'][0])
+    {
+        $request = $this->setAppPasswordRequest($brand, $extRef, $nextcloudUserId, $appname, $contentType);
 
         try {
             $options = $this->createHttpClientOption();
@@ -318,21 +2402,22 @@ class MailConfigurationAPIApi
     }
 
     /**
-     * Operation createMailboxAsync
+     * Operation setAppPasswordAsync
      *
-     * Creates a mailbox on IONOS plattform that is used for nextcloud user
+     * A new password for provided appname will be set and returned
      *
      * @param  string $brand (required)
      * @param  string $extRef (required)
-     * @param  \IONOS\MailConfigurationAPI\Client\Model\MailCreateData $mailCreateData (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createMailbox'] to see the possible values for this operation
+     * @param  string $nextcloudUserId (required)
+     * @param  string $appname (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setAppPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createMailboxAsync($brand, $extRef, $mailCreateData, string $contentType = self::contentTypes['createMailbox'][0])
+    public function setAppPasswordAsync($brand, $extRef, $nextcloudUserId, $appname, string $contentType = self::contentTypes['setAppPassword'][0])
     {
-        return $this->createMailboxAsyncWithHttpInfo($brand, $extRef, $mailCreateData, $contentType)
+        return $this->setAppPasswordAsyncWithHttpInfo($brand, $extRef, $nextcloudUserId, $appname, $contentType)
             ->then(
                 function ($response) {
                     return $response[0];
@@ -341,22 +2426,23 @@ class MailConfigurationAPIApi
     }
 
     /**
-     * Operation createMailboxAsyncWithHttpInfo
+     * Operation setAppPasswordAsyncWithHttpInfo
      *
-     * Creates a mailbox on IONOS plattform that is used for nextcloud user
+     * A new password for provided appname will be set and returned
      *
      * @param  string $brand (required)
      * @param  string $extRef (required)
-     * @param  \IONOS\MailConfigurationAPI\Client\Model\MailCreateData $mailCreateData (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createMailbox'] to see the possible values for this operation
+     * @param  string $nextcloudUserId (required)
+     * @param  string $appname (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setAppPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Promise\PromiseInterface
      */
-    public function createMailboxAsyncWithHttpInfo($brand, $extRef, $mailCreateData, string $contentType = self::contentTypes['createMailbox'][0])
+    public function setAppPasswordAsyncWithHttpInfo($brand, $extRef, $nextcloudUserId, $appname, string $contentType = self::contentTypes['setAppPassword'][0])
     {
         $returnType = 'string';
-        $request = $this->createMailboxRequest($brand, $extRef, $mailCreateData, $contentType);
+        $request = $this->setAppPasswordRequest($brand, $extRef, $nextcloudUserId, $appname, $contentType);
 
         return $this->client
             ->sendAsync($request, $this->createHttpClientOption())
@@ -395,42 +2481,50 @@ class MailConfigurationAPIApi
     }
 
     /**
-     * Create request for operation 'createMailbox'
+     * Create request for operation 'setAppPassword'
      *
      * @param  string $brand (required)
      * @param  string $extRef (required)
-     * @param  \IONOS\MailConfigurationAPI\Client\Model\MailCreateData $mailCreateData (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['createMailbox'] to see the possible values for this operation
+     * @param  string $nextcloudUserId (required)
+     * @param  string $appname (required)
+     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['setAppPassword'] to see the possible values for this operation
      *
      * @throws \InvalidArgumentException
      * @return \GuzzleHttp\Psr7\Request
      */
-    public function createMailboxRequest($brand, $extRef, $mailCreateData, string $contentType = self::contentTypes['createMailbox'][0])
+    public function setAppPasswordRequest($brand, $extRef, $nextcloudUserId, $appname, string $contentType = self::contentTypes['setAppPassword'][0])
     {
 
         // verify the required parameter 'brand' is set
         if ($brand === null || (is_array($brand) && count($brand) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $brand when calling createMailbox'
+                'Missing the required parameter $brand when calling setAppPassword'
             );
         }
 
         // verify the required parameter 'extRef' is set
         if ($extRef === null || (is_array($extRef) && count($extRef) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $extRef when calling createMailbox'
+                'Missing the required parameter $extRef when calling setAppPassword'
             );
         }
 
-        // verify the required parameter 'mailCreateData' is set
-        if ($mailCreateData === null || (is_array($mailCreateData) && count($mailCreateData) === 0)) {
+        // verify the required parameter 'nextcloudUserId' is set
+        if ($nextcloudUserId === null || (is_array($nextcloudUserId) && count($nextcloudUserId) === 0)) {
             throw new \InvalidArgumentException(
-                'Missing the required parameter $mailCreateData when calling createMailbox'
+                'Missing the required parameter $nextcloudUserId when calling setAppPassword'
+            );
+        }
+
+        // verify the required parameter 'appname' is set
+        if ($appname === null || (is_array($appname) && count($appname) === 0)) {
+            throw new \InvalidArgumentException(
+                'Missing the required parameter $appname when calling setAppPassword'
             );
         }
 
 
-        $resourcePath = '/addons/{brand}/{extRef}/mail';
+        $resourcePath = '/addons/{brand}/{extRef}/mail/{nextcloudUserId}/apppwd/{appname}';
         $formParams = [];
         $queryParams = [];
         $headerParams = [];
@@ -452,6 +2546,22 @@ class MailConfigurationAPIApi
             $resourcePath = str_replace(
                 '{' . 'extRef' . '}',
                 ObjectSerializer::toPathValue($extRef),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($nextcloudUserId !== null) {
+            $resourcePath = str_replace(
+                '{' . 'nextcloudUserId' . '}',
+                ObjectSerializer::toPathValue($nextcloudUserId),
+                $resourcePath
+            );
+        }
+        // path params
+        if ($appname !== null) {
+            $resourcePath = str_replace(
+                '{' . 'appname' . '}',
+                ObjectSerializer::toPathValue($appname),
                 $resourcePath
             );
         }
@@ -459,295 +2569,6 @@ class MailConfigurationAPIApi
 
         $headers = $this->headerSelector->selectHeaders(
             ['text/plain', 'application/json', ],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (isset($mailCreateData)) {
-            if (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the body
-                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($mailCreateData));
-            } else {
-                $httpBody = $mailCreateData;
-            }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if (!empty($this->config->getUsername()) || !(empty($this->config->getPassword()))) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'POST',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation deleteMailbox
-     *
-     * Deletes mailbox for given nextcloud user
-     *
-     * @param  string $brand brand (required)
-     * @param  string $extRef extRef (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteMailbox'] to see the possible values for this operation
-     *
-     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function deleteMailbox($brand, $extRef, string $contentType = self::contentTypes['deleteMailbox'][0])
-    {
-        $this->deleteMailboxWithHttpInfo($brand, $extRef, $contentType);
-    }
-
-    /**
-     * Operation deleteMailboxWithHttpInfo
-     *
-     * Deletes mailbox for given nextcloud user
-     *
-     * @param  string $brand (required)
-     * @param  string $extRef (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteMailbox'] to see the possible values for this operation
-     *
-     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function deleteMailboxWithHttpInfo($brand, $extRef, string $contentType = self::contentTypes['deleteMailbox'][0])
-    {
-        $request = $this->deleteMailboxRequest($brand, $extRef, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            return [null, $statusCode, $response->getHeaders()];
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 409:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 412:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-            }
-
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation deleteMailboxAsync
-     *
-     * Deletes mailbox for given nextcloud user
-     *
-     * @param  string $brand (required)
-     * @param  string $extRef (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteMailbox'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function deleteMailboxAsync($brand, $extRef, string $contentType = self::contentTypes['deleteMailbox'][0])
-    {
-        return $this->deleteMailboxAsyncWithHttpInfo($brand, $extRef, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation deleteMailboxAsyncWithHttpInfo
-     *
-     * Deletes mailbox for given nextcloud user
-     *
-     * @param  string $brand (required)
-     * @param  string $extRef (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteMailbox'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function deleteMailboxAsyncWithHttpInfo($brand, $extRef, string $contentType = self::contentTypes['deleteMailbox'][0])
-    {
-        $returnType = '';
-        $request = $this->deleteMailboxRequest($brand, $extRef, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'deleteMailbox'
-     *
-     * @param  string $brand (required)
-     * @param  string $extRef (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['deleteMailbox'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function deleteMailboxRequest($brand, $extRef, string $contentType = self::contentTypes['deleteMailbox'][0])
-    {
-
-        // verify the required parameter 'brand' is set
-        if ($brand === null || (is_array($brand) && count($brand) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $brand when calling deleteMailbox'
-            );
-        }
-
-        // verify the required parameter 'extRef' is set
-        if ($extRef === null || (is_array($extRef) && count($extRef) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $extRef when calling deleteMailbox'
-            );
-        }
-
-
-        $resourcePath = '/addons/{brand}/{extRef}/mail/{nextcloudUserId}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-        // path params
-        if ($brand !== null) {
-            $resourcePath = str_replace(
-                '{' . 'brand' . '}',
-                ObjectSerializer::toPathValue($brand),
-                $resourcePath
-            );
-        }
-        // path params
-        if ($extRef !== null) {
-            $resourcePath = str_replace(
-                '{' . 'extRef' . '}',
-                ObjectSerializer::toPathValue($extRef),
-                $resourcePath
-            );
-        }
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
             $contentType,
             $multipart
         );
@@ -796,308 +2617,7 @@ class MailConfigurationAPIApi
         $operationHost = $this->config->getHost();
         $query = ObjectSerializer::buildQuery($queryParams);
         return new Request(
-            'DELETE',
-            $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
-            $headers,
-            $httpBody
-        );
-    }
-
-    /**
-     * Operation patchMailbox
-     *
-     * update maildata
-     *
-     * @param  string $brand brand (required)
-     * @param  string $extRef extRef (required)
-     * @param  \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest[] $patchMailRequest patchMailRequest (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchMailbox'] to see the possible values for this operation
-     *
-     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return void
-     */
-    public function patchMailbox($brand, $extRef, $patchMailRequest, string $contentType = self::contentTypes['patchMailbox'][0])
-    {
-        $this->patchMailboxWithHttpInfo($brand, $extRef, $patchMailRequest, $contentType);
-    }
-
-    /**
-     * Operation patchMailboxWithHttpInfo
-     *
-     * update maildata
-     *
-     * @param  string $brand (required)
-     * @param  string $extRef (required)
-     * @param  \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest[] $patchMailRequest (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchMailbox'] to see the possible values for this operation
-     *
-     * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
-     * @throws \InvalidArgumentException
-     * @return array of null, HTTP status code, HTTP response headers (array of strings)
-     */
-    public function patchMailboxWithHttpInfo($brand, $extRef, $patchMailRequest, string $contentType = self::contentTypes['patchMailbox'][0])
-    {
-        $request = $this->patchMailboxRequest($brand, $extRef, $patchMailRequest, $contentType);
-
-        try {
-            $options = $this->createHttpClientOption();
-            try {
-                $response = $this->client->send($request, $options);
-            } catch (RequestException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    $e->getResponse() ? $e->getResponse()->getHeaders() : null,
-                    $e->getResponse() ? (string) $e->getResponse()->getBody() : null
-                );
-            } catch (ConnectException $e) {
-                throw new ApiException(
-                    "[{$e->getCode()}] {$e->getMessage()}",
-                    (int) $e->getCode(),
-                    null,
-                    null
-                );
-            }
-
-            $statusCode = $response->getStatusCode();
-
-
-            return [null, $statusCode, $response->getHeaders()];
-        } catch (ApiException $e) {
-            switch ($e->getCode()) {
-                case 404:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 409:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 412:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 400:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-                case 500:
-                    $data = ObjectSerializer::deserialize(
-                        $e->getResponseBody(),
-                        '\IONOS\MailConfigurationAPI\Client\Model\ErrorMessage',
-                        $e->getResponseHeaders()
-                    );
-                    $e->setResponseObject($data);
-                    throw $e;
-            }
-
-
-            throw $e;
-        }
-    }
-
-    /**
-     * Operation patchMailboxAsync
-     *
-     * update maildata
-     *
-     * @param  string $brand (required)
-     * @param  string $extRef (required)
-     * @param  \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest[] $patchMailRequest (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchMailbox'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function patchMailboxAsync($brand, $extRef, $patchMailRequest, string $contentType = self::contentTypes['patchMailbox'][0])
-    {
-        return $this->patchMailboxAsyncWithHttpInfo($brand, $extRef, $patchMailRequest, $contentType)
-            ->then(
-                function ($response) {
-                    return $response[0];
-                }
-            );
-    }
-
-    /**
-     * Operation patchMailboxAsyncWithHttpInfo
-     *
-     * update maildata
-     *
-     * @param  string $brand (required)
-     * @param  string $extRef (required)
-     * @param  \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest[] $patchMailRequest (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchMailbox'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Promise\PromiseInterface
-     */
-    public function patchMailboxAsyncWithHttpInfo($brand, $extRef, $patchMailRequest, string $contentType = self::contentTypes['patchMailbox'][0])
-    {
-        $returnType = '';
-        $request = $this->patchMailboxRequest($brand, $extRef, $patchMailRequest, $contentType);
-
-        return $this->client
-            ->sendAsync($request, $this->createHttpClientOption())
-            ->then(
-                function ($response) use ($returnType) {
-                    return [null, $response->getStatusCode(), $response->getHeaders()];
-                },
-                function ($exception) {
-                    $response = $exception->getResponse();
-                    $statusCode = $response->getStatusCode();
-                    throw new ApiException(
-                        sprintf(
-                            '[%d] Error connecting to the API (%s)',
-                            $statusCode,
-                            $exception->getRequest()->getUri()
-                        ),
-                        $statusCode,
-                        $response->getHeaders(),
-                        (string) $response->getBody()
-                    );
-                }
-            );
-    }
-
-    /**
-     * Create request for operation 'patchMailbox'
-     *
-     * @param  string $brand (required)
-     * @param  string $extRef (required)
-     * @param  \IONOS\MailConfigurationAPI\Client\Model\PatchMailRequest[] $patchMailRequest (required)
-     * @param  string $contentType The value for the Content-Type header. Check self::contentTypes['patchMailbox'] to see the possible values for this operation
-     *
-     * @throws \InvalidArgumentException
-     * @return \GuzzleHttp\Psr7\Request
-     */
-    public function patchMailboxRequest($brand, $extRef, $patchMailRequest, string $contentType = self::contentTypes['patchMailbox'][0])
-    {
-
-        // verify the required parameter 'brand' is set
-        if ($brand === null || (is_array($brand) && count($brand) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $brand when calling patchMailbox'
-            );
-        }
-
-        // verify the required parameter 'extRef' is set
-        if ($extRef === null || (is_array($extRef) && count($extRef) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $extRef when calling patchMailbox'
-            );
-        }
-
-        // verify the required parameter 'patchMailRequest' is set
-        if ($patchMailRequest === null || (is_array($patchMailRequest) && count($patchMailRequest) === 0)) {
-            throw new \InvalidArgumentException(
-                'Missing the required parameter $patchMailRequest when calling patchMailbox'
-            );
-        }
-
-
-        $resourcePath = '/addons/{brand}/{extRef}/mail/{nextcloudUserId}';
-        $formParams = [];
-        $queryParams = [];
-        $headerParams = [];
-        $httpBody = '';
-        $multipart = false;
-
-
-
-        // path params
-        if ($brand !== null) {
-            $resourcePath = str_replace(
-                '{' . 'brand' . '}',
-                ObjectSerializer::toPathValue($brand),
-                $resourcePath
-            );
-        }
-        // path params
-        if ($extRef !== null) {
-            $resourcePath = str_replace(
-                '{' . 'extRef' . '}',
-                ObjectSerializer::toPathValue($extRef),
-                $resourcePath
-            );
-        }
-
-
-        $headers = $this->headerSelector->selectHeaders(
-            ['application/json', ],
-            $contentType,
-            $multipart
-        );
-
-        // for model (json/xml)
-        if (isset($patchMailRequest)) {
-            if (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the body
-                $httpBody = \GuzzleHttp\Utils::jsonEncode(ObjectSerializer::sanitizeForSerialization($patchMailRequest));
-            } else {
-                $httpBody = $patchMailRequest;
-            }
-        } elseif (count($formParams) > 0) {
-            if ($multipart) {
-                $multipartContents = [];
-                foreach ($formParams as $formParamName => $formParamValue) {
-                    $formParamValueItems = is_array($formParamValue) ? $formParamValue : [$formParamValue];
-                    foreach ($formParamValueItems as $formParamValueItem) {
-                        $multipartContents[] = [
-                            'name' => $formParamName,
-                            'contents' => $formParamValueItem
-                        ];
-                    }
-                }
-                // for HTTP post (form)
-                $httpBody = new MultipartStream($multipartContents);
-
-            } elseif (stripos($headers['Content-Type'], 'application/json') !== false) {
-                # if Content-Type contains "application/json", json_encode the form parameters
-                $httpBody = \GuzzleHttp\Utils::jsonEncode($formParams);
-            } else {
-                // for HTTP post (form)
-                $httpBody = ObjectSerializer::buildQuery($formParams);
-            }
-        }
-
-        // this endpoint requires HTTP basic authentication
-        if (!empty($this->config->getUsername()) || !(empty($this->config->getPassword()))) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($this->config->getUsername() . ":" . $this->config->getPassword());
-        }
-
-        $defaultHeaders = [];
-        if ($this->config->getUserAgent()) {
-            $defaultHeaders['User-Agent'] = $this->config->getUserAgent();
-        }
-
-        $headers = array_merge(
-            $defaultHeaders,
-            $headerParams,
-            $headers
-        );
-
-        $operationHost = $this->config->getHost();
-        $query = ObjectSerializer::buildQuery($queryParams);
-        return new Request(
-            'PATCH',
+            'POST',
             $operationHost . $resourcePath . ($query ? "?{$query}" : ''),
             $headers,
             $httpBody

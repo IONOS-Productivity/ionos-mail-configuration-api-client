@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MailCreateData
+ * Smtp
  *
  * PHP version 8.1
  *
@@ -41,7 +41,7 @@ use \ArrayAccess;
 use \IONOS\MailConfigurationAPI\Client\ObjectSerializer;
 
 /**
- * MailCreateData Class Doc Comment
+ * Smtp Class Doc Comment
  *
  * @category Class
  * @package  IONOS\MailConfigurationAPI\Client
@@ -49,7 +49,7 @@ use \IONOS\MailConfigurationAPI\Client\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class MailCreateData implements ModelInterface, ArrayAccess, \JsonSerializable
+class Smtp implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -58,7 +58,7 @@ class MailCreateData implements ModelInterface, ArrayAccess, \JsonSerializable
       *
       * @var string
       */
-    protected static $openAPIModelName = 'MailCreateData';
+    protected static $openAPIModelName = 'Smtp';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -66,9 +66,9 @@ class MailCreateData implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var string[]
       */
     protected static $openAPITypes = [
-        'nextcloudUserId' => 'string',
-        'localPart' => 'string',
-        'domainPart' => 'string'
+        'host' => 'string',
+        'port' => 'int',
+        'sslMode' => 'string'
     ];
 
     /**
@@ -79,9 +79,9 @@ class MailCreateData implements ModelInterface, ArrayAccess, \JsonSerializable
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'nextcloudUserId' => null,
-        'localPart' => null,
-        'domainPart' => null
+        'host' => null,
+        'port' => 'int32',
+        'sslMode' => null
     ];
 
     /**
@@ -90,9 +90,9 @@ class MailCreateData implements ModelInterface, ArrayAccess, \JsonSerializable
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'nextcloudUserId' => false,
-        'localPart' => false,
-        'domainPart' => false
+        'host' => false,
+        'port' => false,
+        'sslMode' => false
     ];
 
     /**
@@ -181,9 +181,9 @@ class MailCreateData implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $attributeMap = [
-        'nextcloudUserId' => 'nextcloudUserId',
-        'localPart' => 'localPart',
-        'domainPart' => 'domainPart'
+        'host' => 'host',
+        'port' => 'port',
+        'sslMode' => 'sslMode'
     ];
 
     /**
@@ -192,9 +192,9 @@ class MailCreateData implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $setters = [
-        'nextcloudUserId' => 'setNextcloudUserId',
-        'localPart' => 'setLocalPart',
-        'domainPart' => 'setDomainPart'
+        'host' => 'setHost',
+        'port' => 'setPort',
+        'sslMode' => 'setSslMode'
     ];
 
     /**
@@ -203,9 +203,9 @@ class MailCreateData implements ModelInterface, ArrayAccess, \JsonSerializable
      * @var string[]
      */
     protected static $getters = [
-        'nextcloudUserId' => 'getNextcloudUserId',
-        'localPart' => 'getLocalPart',
-        'domainPart' => 'getDomainPart'
+        'host' => 'getHost',
+        'port' => 'getPort',
+        'sslMode' => 'getSslMode'
     ];
 
     /**
@@ -265,9 +265,9 @@ class MailCreateData implements ModelInterface, ArrayAccess, \JsonSerializable
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('nextcloudUserId', $data ?? [], null);
-        $this->setIfExists('localPart', $data ?? [], null);
-        $this->setIfExists('domainPart', $data ?? [], null);
+        $this->setIfExists('host', $data ?? [], null);
+        $this->setIfExists('port', $data ?? [], null);
+        $this->setIfExists('sslMode', $data ?? [], null);
     }
 
     /**
@@ -297,27 +297,6 @@ class MailCreateData implements ModelInterface, ArrayAccess, \JsonSerializable
     {
         $invalidProperties = [];
 
-        if ($this->container['nextcloudUserId'] === null) {
-            $invalidProperties[] = "'nextcloudUserId' can't be null";
-        }
-        if ((mb_strlen($this->container['nextcloudUserId']) < 1)) {
-            $invalidProperties[] = "invalid value for 'nextcloudUserId', the character length must be bigger than or equal to 1.";
-        }
-
-        if ($this->container['localPart'] === null) {
-            $invalidProperties[] = "'localPart' can't be null";
-        }
-        if ((mb_strlen($this->container['localPart']) < 1)) {
-            $invalidProperties[] = "invalid value for 'localPart', the character length must be bigger than or equal to 1.";
-        }
-
-        if ($this->container['domainPart'] === null) {
-            $invalidProperties[] = "'domainPart' can't be null";
-        }
-        if ((mb_strlen($this->container['domainPart']) < 1)) {
-            $invalidProperties[] = "invalid value for 'domainPart', the character length must be bigger than or equal to 1.";
-        }
-
         return $invalidProperties;
     }
 
@@ -334,97 +313,82 @@ class MailCreateData implements ModelInterface, ArrayAccess, \JsonSerializable
 
 
     /**
-     * Gets nextcloudUserId
+     * Gets host
      *
-     * @return string
+     * @return string|null
      */
-    public function getNextcloudUserId()
+    public function getHost()
     {
-        return $this->container['nextcloudUserId'];
+        return $this->container['host'];
     }
 
     /**
-     * Sets nextcloudUserId
+     * Sets host
      *
-     * @param string $nextcloudUserId userid in UUID format of the Nextcloud user account to which the mail account should be created
+     * @param string|null $host host
      *
      * @return self
      */
-    public function setNextcloudUserId($nextcloudUserId)
+    public function setHost($host)
     {
-        if (is_null($nextcloudUserId)) {
-            throw new \InvalidArgumentException('non-nullable nextcloudUserId cannot be null');
+        if (is_null($host)) {
+            throw new \InvalidArgumentException('non-nullable host cannot be null');
         }
-
-        if ((mb_strlen($nextcloudUserId) < 1)) {
-            throw new \InvalidArgumentException('invalid length for $nextcloudUserId when calling MailCreateData., must be bigger than or equal to 1.');
-        }
-
-        $this->container['nextcloudUserId'] = $nextcloudUserId;
+        $this->container['host'] = $host;
 
         return $this;
     }
 
     /**
-     * Gets localPart
+     * Gets port
      *
-     * @return string
+     * @return int|null
      */
-    public function getLocalPart()
+    public function getPort()
     {
-        return $this->container['localPart'];
+        return $this->container['port'];
     }
 
     /**
-     * Sets localPart
+     * Sets port
      *
-     * @param string $localPart the local part of the mail address (without @domain.tld)
+     * @param int|null $port port
      *
      * @return self
      */
-    public function setLocalPart($localPart)
+    public function setPort($port)
     {
-        if (is_null($localPart)) {
-            throw new \InvalidArgumentException('non-nullable localPart cannot be null');
+        if (is_null($port)) {
+            throw new \InvalidArgumentException('non-nullable port cannot be null');
         }
-
-        if ((mb_strlen($localPart) < 1)) {
-            throw new \InvalidArgumentException('invalid length for $localPart when calling MailCreateData., must be bigger than or equal to 1.');
-        }
-
-        $this->container['localPart'] = $localPart;
+        $this->container['port'] = $port;
 
         return $this;
     }
 
     /**
-     * Gets domainPart
+     * Gets sslMode
      *
-     * @return string
+     * @return string|null
      */
-    public function getDomainPart()
+    public function getSslMode()
     {
-        return $this->container['domainPart'];
+        return $this->container['sslMode'];
     }
 
     /**
-     * Sets domainPart
+     * Sets sslMode
      *
-     * @param string $domainPart the domain part of the mail address (without local part)
+     * @param string|null $sslMode sslMode
      *
      * @return self
      */
-    public function setDomainPart($domainPart)
+    public function setSslMode($sslMode)
     {
-        if (is_null($domainPart)) {
-            throw new \InvalidArgumentException('non-nullable domainPart cannot be null');
+        if (is_null($sslMode)) {
+            throw new \InvalidArgumentException('non-nullable sslMode cannot be null');
         }
-
-        if ((mb_strlen($domainPart) < 1)) {
-            throw new \InvalidArgumentException('invalid length for $domainPart when calling MailCreateData., must be bigger than or equal to 1.');
-        }
-
-        $this->container['domainPart'] = $domainPart;
+        $this->container['sslMode'] = $sslMode;
 
         return $this;
     }
