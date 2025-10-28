@@ -158,36 +158,28 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/MailAccountResponse"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorMessage"
-                }
-              }
-            }
-          },
-          "409": {
-            "description": "Duplicate",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorMessage"
-                }
-              }
-            }
-          },
-          "412": {
-            "description": "Context State Conflict",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Successful mailbox creation",
+                    "value": {
+                      "password": "aB3x!foobar",
+                      "email": "admin@storage.localhost",
+                      "nextcloudUserId": "nc_1234567890abcdef",
+                      "server": {
+                        "imap": {
+                          "host": "imap.mail.localhost",
+                          "port": 1143,
+                          "sslMode": "none"
+                        },
+                        "smtp": {
+                          "host": "smtp.mail.localhost",
+                          "port": 1587,
+                          "sslMode": "none"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -198,6 +190,116 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "invalidLocalPart": {
+                    "summary": "Invalid local part in email",
+                    "value": {
+                      "status": "400 BAD_REQUEST",
+                      "message": "Invalid local part: must contain only valid characters",
+                      "requestId": "req-12345-abc"
+                    }
+                  },
+                  "invalidDomain": {
+                    "summary": "Invalid domain part",
+                    "value": {
+                      "status": "400 BAD_REQUEST",
+                      "message": "Invalid domain: domain does not exist or is not authorized",
+                      "requestId": "req-12346-def"
+                    }
+                  },
+                  "missingFields": {
+                    "summary": "Missing required fields",
+                    "value": {
+                      "status": "400 BAD_REQUEST",
+                      "message": "Required fields are missing: nextcloudUserId, localPart, domainPart",
+                      "requestId": "req-12347-ghi"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "extRefNotFound": {
+                    "summary": "External reference not found",
+                    "value": {
+                      "status": "404 NOT_FOUND",
+                      "message": "External reference not found for the given brand",
+                      "requestId": "req-12348-jkl"
+                    }
+                  },
+                  "brandNotFound": {
+                    "summary": "Brand not found",
+                    "value": {
+                      "status": "404 NOT_FOUND",
+                      "message": "Brand not found or not supported",
+                      "requestId": "req-12349-mno"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Duplicate",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "mailboxExists": {
+                    "summary": "Mailbox already exists",
+                    "value": {
+                      "status": "409 CONFLICT",
+                      "message": "Mailbox already exists for this nextcloud user",
+                      "requestId": "req-12350-pqr"
+                    }
+                  },
+                  "emailAddressExists": {
+                    "summary": "Email address already in use",
+                    "value": {
+                      "status": "409 CONFLICT",
+                      "message": "Email address is already in use",
+                      "requestId": "req-12351-stu"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "Context State Conflict",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "stateConflict": {
+                    "summary": "Context state conflict",
+                    "value": {
+                      "status": "412 PRECONDITION_FAILED",
+                      "message": "The current state of the context does not allow this operation",
+                      "requestId": "req-12352-vwx"
+                    }
+                  },
+                  "quotaExceeded": {
+                    "summary": "Mailbox quota exceeded",
+                    "value": {
+                      "status": "412 PRECONDITION_FAILED",
+                      "message": "Mailbox quota exceeded for this account",
+                      "requestId": "req-12353-yza"
+                    }
+                  }
                 }
               }
             }
@@ -208,6 +310,24 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorMessage"
+                },
+                "examples": {
+                  "internalError": {
+                    "summary": "Internal server error",
+                    "value": {
+                      "status": "500 INTERNAL_SERVER_ERROR",
+                      "message": "An unexpected error occurred while creating the mailbox",
+                      "requestId": "req-12354-bcd"
+                    }
+                  },
+                  "databaseError": {
+                    "summary": "Database connection error",
+                    "value": {
+                      "status": "500 INTERNAL_SERVER_ERROR",
+                      "message": "Database connection failed",
+                      "requestId": "req-12355-efg"
+                    }
+                  }
                 }
               }
             }
@@ -774,7 +894,7 @@
           "password": {
             "type": "string",
             "description": "The generated app password for the mail account.",
-            "example": "aB3x!9kLmPq2"
+            "example": "foobar"
           },
           "email": {
             "type": "string",
