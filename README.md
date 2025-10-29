@@ -110,6 +110,216 @@ Authentication schemes defined for the API:
 
 - **Type**: HTTP basic authentication
 
+## Mock Server
+
+This project includes a mock server configuration for local development and testing using [Prism](https://stoplight.io/open-source/prism).
+
+### Starting the Mock Server
+
+To start the mock server, run:
+
+```bash
+npm install
+npm run mock
+```
+
+The mock server will start on `http://localhost:4010` by default.
+
+### Authentication
+
+All requests to the mock server require HTTP Basic Authentication. You can use any username and password for testing:
+
+```bash
+-u "test:test"
+```
+
+### Testing Different Response Codes
+
+The POST endpoint `/addons/{brand}/{extRef}/mail` has been configured with multiple example responses for different scenarios. You can use Prism's `Prefer` header to select specific status codes and examples.
+
+#### Success Response (200)
+```bash
+curl -u "test:test" -X POST http://localhost:4010/addons/IONOS/test123/mail \
+  -H "Content-Type: application/json" \
+  -H "Prefer: code=200, example=success" \
+  -d '{
+    "nextcloudUserId": "nc_1234567890abcdef",
+    "localPart": "testuser",
+    "domainPart": "example.com"
+  }'
+```
+
+Response:
+```json
+{
+  "password": "aB3x!9kLmPq2wR5t",
+  "email": "testuser@example.com",
+  "nextcloudUserId": "nc_1234567890abcdef",
+  "server": {
+    "imap": {
+      "host": "imap.ionos.com",
+      "port": 993,
+      "sslMode": "SSL"
+    },
+    "smtp": {
+      "host": "smtp.ionos.com",
+      "port": 587,
+      "sslMode": "STARTTLS"
+    }
+  }
+}
+```
+
+#### Bad Request Examples (400)
+
+**Invalid local part:**
+```bash
+curl -u "test:test" -X POST http://localhost:4010/addons/IONOS/test123/mail \
+  -H "Content-Type: application/json" \
+  -H "Prefer: code=400, example=invalidLocalPart" \
+  -d '{
+    "nextcloudUserId": "nc_1234567890abcdef",
+    "localPart": "invalid@@user",
+    "domainPart": "example.com"
+  }'
+```
+
+**Invalid domain:**
+```bash
+curl -u "test:test" -X POST http://localhost:4010/addons/IONOS/test123/mail \
+  -H "Content-Type: application/json" \
+  -H "Prefer: code=400, example=invalidDomain" \
+  -d '{
+    "nextcloudUserId": "nc_1234567890abcdef",
+    "localPart": "testuser",
+    "domainPart": "invalid-domain"
+  }'
+```
+
+**Missing required fields:**
+```bash
+curl -u "test:test" -X POST http://localhost:4010/addons/IONOS/test123/mail \
+  -H "Content-Type: application/json" \
+  -H "Prefer: code=400, example=missingFields" \
+  -d '{}'
+```
+
+#### Not Found Examples (404)
+
+**External reference not found:**
+```bash
+curl -u "test:test" -X POST http://localhost:4010/addons/IONOS/unknown123/mail \
+  -H "Content-Type: application/json" \
+  -H "Prefer: code=404, example=extRefNotFound" \
+  -d '{
+    "nextcloudUserId": "nc_1234567890abcdef",
+    "localPart": "testuser",
+    "domainPart": "example.com"
+  }'
+```
+
+**Brand not found:**
+```bash
+curl -u "test:test" -X POST http://localhost:4010/addons/UNKNOWN/test123/mail \
+  -H "Content-Type: application/json" \
+  -H "Prefer: code=404, example=brandNotFound" \
+  -d '{
+    "nextcloudUserId": "nc_1234567890abcdef",
+    "localPart": "testuser",
+    "domainPart": "example.com"
+  }'
+```
+
+#### Conflict Examples (409)
+
+**Mailbox already exists:**
+```bash
+curl -u "test:test" -X POST http://localhost:4010/addons/IONOS/test123/mail \
+  -H "Content-Type: application/json" \
+  -H "Prefer: code=409, example=mailboxExists" \
+  -d '{
+    "nextcloudUserId": "nc_existing_user",
+    "localPart": "testuser",
+    "domainPart": "example.com"
+  }'
+```
+
+**Email address already in use:**
+```bash
+curl -u "test:test" -X POST http://localhost:4010/addons/IONOS/test123/mail \
+  -H "Content-Type: application/json" \
+  -H "Prefer: code=409, example=emailAddressExists" \
+  -d '{
+    "nextcloudUserId": "nc_1234567890abcdef",
+    "localPart": "existing",
+    "domainPart": "example.com"
+  }'
+```
+
+#### Precondition Failed Examples (412)
+
+**Context state conflict:**
+```bash
+curl -u "test:test" -X POST http://localhost:4010/addons/IONOS/test123/mail \
+  -H "Content-Type: application/json" \
+  -H "Prefer: code=412, example=stateConflict" \
+  -d '{
+    "nextcloudUserId": "nc_1234567890abcdef",
+    "localPart": "testuser",
+    "domainPart": "example.com"
+  }'
+```
+
+**Quota exceeded:**
+```bash
+curl -u "test:test" -X POST http://localhost:4010/addons/IONOS/test123/mail \
+  -H "Content-Type: application/json" \
+  -H "Prefer: code=412, example=quotaExceeded" \
+  -d '{
+    "nextcloudUserId": "nc_1234567890abcdef",
+    "localPart": "testuser",
+    "domainPart": "example.com"
+  }'
+```
+
+#### Internal Server Error Examples (500)
+
+**Internal error:**
+```bash
+curl -u "test:test" -X POST http://localhost:4010/addons/IONOS/test123/mail \
+  -H "Content-Type: application/json" \
+  -H "Prefer: code=500, example=internalError" \
+  -d '{
+    "nextcloudUserId": "nc_1234567890abcdef",
+    "localPart": "testuser",
+    "domainPart": "example.com"
+  }'
+```
+
+**Database error:**
+```bash
+curl -u "test:test" -X POST http://localhost:4010/addons/IONOS/test123/mail \
+  -H "Content-Type: application/json" \
+  -H "Prefer: code=500, example=databaseError" \
+  -d '{
+    "nextcloudUserId": "nc_1234567890abcdef",
+    "localPart": "testuser",
+    "domainPart": "example.com"
+  }'
+```
+
+### Dynamic Response Selection
+
+By default, Prism will return the success response (200). You can force specific status codes by using:
+```bash
+-H "Prefer: code=400"  # Returns any 400 error example
+```
+
+Or combine with a specific example:
+```bash
+-H "Prefer: code=400, example=invalidLocalPart"  # Returns specific 400 error example
+```
+
 ## Tests
 
 To run the tests, use:
