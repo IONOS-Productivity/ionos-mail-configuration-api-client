@@ -4,11 +4,11 @@
     "title": "Event Configuration Handler",
     "description": "This is the API client for the Mail Configuration API",
     "contact": {},
-    "version": "2.0.0-SNAPSHOT"
+    "version": "2.0.0-20251031093901"
   },
   "servers": [
     {
-      "url": "http://localhost:8080",
+      "url": "https://API_HOST/nextcloud",
       "description": "Generated server url"
     }
   ],
@@ -739,16 +739,9 @@
             "description": "the local part of the mail address (without @domain.tld)",
             "example": "hugo.van.test",
             "minLength": 1
-          },
-          "domainPart": {
-            "type": "string",
-            "description": "the domain part of the mail address (without local part)",
-            "example": "example.net",
-            "minLength": 1
           }
         },
         "required": [
-          "domainPart",
           "localPart",
           "nextcloudUserId"
         ]
