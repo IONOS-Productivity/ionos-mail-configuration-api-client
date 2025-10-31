@@ -30,7 +30,7 @@ done
 
 # Set the API spec host and URL
 API_SPEC_HOST=$1
-API_SPEC="https://${API_SPEC_HOST}/ncw-mail-notification/api-docs/ConfigurationAPI"
+API_SPEC="https://${API_SPEC_HOST}/nextcloud/api-docs/Addon%20API"
 echo "Update API client definition"
 echo "API Spec: ${API_SPEC}"
 
