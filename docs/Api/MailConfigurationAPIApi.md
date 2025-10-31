@@ -1,6 +1,6 @@
 # IONOS\MailConfigurationAPI\Client\MailConfigurationAPIApi
 
-All URIs are relative to http://localhost:8080, except if the operation defines another base path.
+All URIs are relative to https://API_HOST/nextcloud, except if the operation defines another base path.
 
 | Method | HTTP request | Description |
 | ------------- | ------------- | ------------- |
