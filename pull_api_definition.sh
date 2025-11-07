@@ -251,12 +251,16 @@ handle_version_comparison() {
 # Handle branch creation when branch already exists
 handle_existing_branch() {
 	local branch=$1
+	local branch_exists_info
+	local branch_exists_local
+	local branch_exists_remote
 
 	echo ""
 	warn "Branch '${branch}' already exists"
 
-	check_branch_exists "${branch}"
-	show_branch_locations
+	branch_exists_info=$(check_branch_exists "${branch}")
+	read -r branch_exists_local branch_exists_remote <<< "${branch_exists_info}"
+	show_branch_locations "${branch_exists_local}" "${branch_exists_remote}"
 
 	echo ""
 	echo "What would you like to do?"
@@ -268,7 +272,7 @@ handle_existing_branch() {
 
 	case ${choice} in
 		1)
-			switch_to_existing_branch "${branch}"
+			switch_to_existing_branch "${branch}" "${branch_exists_local}" "${branch_exists_remote}"
 			;;
 		2)
 			prompt_for_branch_name "${branch}"
@@ -286,6 +290,8 @@ handle_existing_branch() {
 # Switch to an existing branch (local or remote)
 switch_to_existing_branch() {
 	local branch=$1
+	local branch_exists_local=$2
+	local branch_exists_remote=$3
 
 	if [[ ${branch_exists_local} -gt 0 ]]; then
 		info "Switching to existing local branch: ${branch}"
@@ -301,6 +307,9 @@ prompt_for_branch_name() {
 	local suggested_name=$1
 	local new_name=""
 	local current_suggestion="${suggested_name}"
+	local branch_exists_info
+	local branch_exists_local
+	local branch_exists_remote
 
 	while true; do
 		echo ""
@@ -313,9 +322,12 @@ prompt_for_branch_name() {
 		fi
 
 		# Check if the new branch name already exists
-		if check_branch_exists "${new_name}"; then
+		branch_exists_info=$(check_branch_exists "${new_name}")
+		read -r branch_exists_local branch_exists_remote <<< "${branch_exists_info}"
+
+		if [[ ${branch_exists_local} -gt 0 || ${branch_exists_remote} -gt 0 ]]; then
 			warn "Branch '${new_name}' already exists"
-			show_branch_locations
+			show_branch_locations "${branch_exists_local}" "${branch_exists_remote}"
 			echo ""
 
 			if ! ask_yes_no "Try a different name?" "Y"; then
@@ -337,11 +349,18 @@ prompt_for_branch_name() {
 
 # Create a new branch for the API update
 create_update_branch() {
+	local branch_exists_info
+	local branch_exists_local
+	local branch_exists_remote
+
 	if [[ "${create_branch}" != "true" ]]; then
 		return 0
 	fi
 
-	if check_branch_exists "${branch_name}"; then
+	branch_exists_info=$(check_branch_exists "${branch_name}")
+	read -r branch_exists_local branch_exists_remote <<< "${branch_exists_info}"
+
+	if [[ ${branch_exists_local} -gt 0 || ${branch_exists_remote} -gt 0 ]]; then
 		handle_existing_branch "${branch_name}"
 	else
 		info "Creating new branch: ${branch_name}"
