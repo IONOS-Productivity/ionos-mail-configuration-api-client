@@ -211,7 +211,7 @@ void (empty response body)
 ## `getAllFunctionalAccounts()`
 
 ```php
-getAllFunctionalAccounts($brand, $extRef): \IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse
+getAllFunctionalAccounts($brand, $extRef): \IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse[]
 ```
 
 Returns all functional mailboxes for the given brand and extRef
@@ -256,7 +256,7 @@ try {
 
 ### Return type
 
-[**\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse**](../Model/MailAccountResponse.md)
+[**\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse[]**](../Model/MailAccountResponse.md)
 
 ### Authorization
 

@@ -1168,7 +1168,7 @@ class MailConfigurationAPIApi
      *
      * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return \IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage
+     * @return \IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse[]|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage
      */
     public function getAllFunctionalAccounts($brand, $extRef, string $contentType = self::contentTypes['getAllFunctionalAccounts'][0])
     {
@@ -1187,7 +1187,7 @@ class MailConfigurationAPIApi
      *
      * @throws \IONOS\MailConfigurationAPI\Client\ApiException on non-2xx response or if the response body is not in the expected format
      * @throws \InvalidArgumentException
-     * @return array of \IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage, HTTP status code, HTTP response headers (array of strings)
+     * @return array of \IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse[]|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage|\IONOS\MailConfigurationAPI\Client\Model\MailAddonErrorMessage, HTTP status code, HTTP response headers (array of strings)
      */
     public function getAllFunctionalAccountsWithHttpInfo($brand, $extRef, string $contentType = self::contentTypes['getAllFunctionalAccounts'][0])
     {
@@ -1219,7 +1219,7 @@ class MailConfigurationAPIApi
             switch ($statusCode) {
                 case 200:
                     return $this->handleResponseWithDataType(
-                        '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse',
+                        '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse[]',
                         $request,
                         $response,
                     );
@@ -1271,7 +1271,7 @@ class MailConfigurationAPIApi
             }
 
             return $this->handleResponseWithDataType(
-                '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse',
+                '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse[]',
                 $request,
                 $response,
             );
@@ -1280,7 +1280,7 @@ class MailConfigurationAPIApi
                 case 200:
                     $data = ObjectSerializer::deserialize(
                         $e->getResponseBody(),
-                        '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse',
+                        '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse[]',
                         $e->getResponseHeaders()
                     );
                     $e->setResponseObject($data);
@@ -1368,7 +1368,7 @@ class MailConfigurationAPIApi
      */
     public function getAllFunctionalAccountsAsyncWithHttpInfo($brand, $extRef, string $contentType = self::contentTypes['getAllFunctionalAccounts'][0])
     {
-        $returnType = '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse';
+        $returnType = '\IONOS\MailConfigurationAPI\Client\Model\MailAccountResponse[]';
         $request = $this->getAllFunctionalAccountsRequest($brand, $extRef, $contentType);
 
         return $this->client
