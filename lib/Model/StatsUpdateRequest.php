@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MailAccountCreatedResponse
+ * StatsUpdateRequest
  *
  * PHP version 8.1
  *
@@ -41,7 +41,7 @@ use \ArrayAccess;
 use \IONOS\MailConfigurationAPI\Client\ObjectSerializer;
 
 /**
- * MailAccountCreatedResponse Class Doc Comment
+ * StatsUpdateRequest Class Doc Comment
  *
  * @category Class
  * @package  IONOS\MailConfigurationAPI\Client
@@ -49,7 +49,7 @@ use \IONOS\MailConfigurationAPI\Client\ObjectSerializer;
  * @link     https://openapi-generator.tech
  * @implements \ArrayAccess<string, mixed>
  */
-class MailAccountCreatedResponse implements ModelInterface, ArrayAccess, \JsonSerializable
+class StatsUpdateRequest implements ModelInterface, ArrayAccess, \JsonSerializable
 {
     public const DISCRIMINATOR = null;
 
@@ -58,7 +58,7 @@ class MailAccountCreatedResponse implements ModelInterface, ArrayAccess, \JsonSe
       *
       * @var string
       */
-    protected static $openAPIModelName = 'MailAccountCreatedResponse';
+    protected static $openAPIModelName = 'StatsUpdateRequest';
 
     /**
       * Array of property to type mappings. Used for (de)serialization
@@ -66,10 +66,8 @@ class MailAccountCreatedResponse implements ModelInterface, ArrayAccess, \JsonSe
       * @var string[]
       */
     protected static $openAPITypes = [
-        'password' => 'string',
-        'email' => 'string',
-        'nextcloudUserId' => 'string',
-        'server' => '\IONOS\MailConfigurationAPI\Client\Model\MailServer'
+        'timestamp' => '\DateTime',
+        'users' => '\IONOS\MailConfigurationAPI\Client\Model\UserStats'
     ];
 
     /**
@@ -80,10 +78,8 @@ class MailAccountCreatedResponse implements ModelInterface, ArrayAccess, \JsonSe
       * @psalm-var array<string, string|null>
       */
     protected static $openAPIFormats = [
-        'password' => null,
-        'email' => null,
-        'nextcloudUserId' => null,
-        'server' => null
+        'timestamp' => 'date-time',
+        'users' => null
     ];
 
     /**
@@ -92,10 +88,8 @@ class MailAccountCreatedResponse implements ModelInterface, ArrayAccess, \JsonSe
       * @var boolean[]
       */
     protected static array $openAPINullables = [
-        'password' => false,
-        'email' => false,
-        'nextcloudUserId' => false,
-        'server' => false
+        'timestamp' => false,
+        'users' => false
     ];
 
     /**
@@ -184,10 +178,8 @@ class MailAccountCreatedResponse implements ModelInterface, ArrayAccess, \JsonSe
      * @var string[]
      */
     protected static $attributeMap = [
-        'password' => 'password',
-        'email' => 'email',
-        'nextcloudUserId' => 'nextcloudUserId',
-        'server' => 'server'
+        'timestamp' => 'timestamp',
+        'users' => 'users'
     ];
 
     /**
@@ -196,10 +188,8 @@ class MailAccountCreatedResponse implements ModelInterface, ArrayAccess, \JsonSe
      * @var string[]
      */
     protected static $setters = [
-        'password' => 'setPassword',
-        'email' => 'setEmail',
-        'nextcloudUserId' => 'setNextcloudUserId',
-        'server' => 'setServer'
+        'timestamp' => 'setTimestamp',
+        'users' => 'setUsers'
     ];
 
     /**
@@ -208,10 +198,8 @@ class MailAccountCreatedResponse implements ModelInterface, ArrayAccess, \JsonSe
      * @var string[]
      */
     protected static $getters = [
-        'password' => 'getPassword',
-        'email' => 'getEmail',
-        'nextcloudUserId' => 'getNextcloudUserId',
-        'server' => 'getServer'
+        'timestamp' => 'getTimestamp',
+        'users' => 'getUsers'
     ];
 
     /**
@@ -271,10 +259,8 @@ class MailAccountCreatedResponse implements ModelInterface, ArrayAccess, \JsonSe
      */
     public function __construct(?array $data = null)
     {
-        $this->setIfExists('password', $data ?? [], null);
-        $this->setIfExists('email', $data ?? [], null);
-        $this->setIfExists('nextcloudUserId', $data ?? [], null);
-        $this->setIfExists('server', $data ?? [], null);
+        $this->setIfExists('timestamp', $data ?? [], null);
+        $this->setIfExists('users', $data ?? [], null);
     }
 
     /**
@@ -304,6 +290,12 @@ class MailAccountCreatedResponse implements ModelInterface, ArrayAccess, \JsonSe
     {
         $invalidProperties = [];
 
+        if ($this->container['timestamp'] === null) {
+            $invalidProperties[] = "'timestamp' can't be null";
+        }
+        if ($this->container['users'] === null) {
+            $invalidProperties[] = "'users' can't be null";
+        }
         return $invalidProperties;
     }
 
@@ -320,109 +312,55 @@ class MailAccountCreatedResponse implements ModelInterface, ArrayAccess, \JsonSe
 
 
     /**
-     * Gets password
+     * Gets timestamp
      *
-     * @return string|null
+     * @return \DateTime
      */
-    public function getPassword()
+    public function getTimestamp()
     {
-        return $this->container['password'];
+        return $this->container['timestamp'];
     }
 
     /**
-     * Sets password
+     * Sets timestamp
      *
-     * @param string|null $password The generated app password for the mail account.
+     * @param \DateTime $timestamp timestamp
      *
      * @return self
      */
-    public function setPassword($password)
+    public function setTimestamp($timestamp)
     {
-        if (is_null($password)) {
-            throw new \InvalidArgumentException('non-nullable password cannot be null');
+        if (is_null($timestamp)) {
+            throw new \InvalidArgumentException('non-nullable timestamp cannot be null');
         }
-        $this->container['password'] = $password;
+        $this->container['timestamp'] = $timestamp;
 
         return $this;
     }
 
     /**
-     * Gets email
+     * Gets users
      *
-     * @return string|null
+     * @return \IONOS\MailConfigurationAPI\Client\Model\UserStats
      */
-    public function getEmail()
+    public function getUsers()
     {
-        return $this->container['email'];
+        return $this->container['users'];
     }
 
     /**
-     * Sets email
+     * Sets users
      *
-     * @param string|null $email The email address of the created mail account.
+     * @param \IONOS\MailConfigurationAPI\Client\Model\UserStats $users users
      *
      * @return self
      */
-    public function setEmail($email)
+    public function setUsers($users)
     {
-        if (is_null($email)) {
-            throw new \InvalidArgumentException('non-nullable email cannot be null');
+        if (is_null($users)) {
+            throw new \InvalidArgumentException('non-nullable users cannot be null');
         }
-        $this->container['email'] = $email;
-
-        return $this;
-    }
-
-    /**
-     * Gets nextcloudUserId
-     *
-     * @return string|null
-     */
-    public function getNextcloudUserId()
-    {
-        return $this->container['nextcloudUserId'];
-    }
-
-    /**
-     * Sets nextcloudUserId
-     *
-     * @param string|null $nextcloudUserId The Nextcloud user ID associated with the mail account.
-     *
-     * @return self
-     */
-    public function setNextcloudUserId($nextcloudUserId)
-    {
-        if (is_null($nextcloudUserId)) {
-            throw new \InvalidArgumentException('non-nullable nextcloudUserId cannot be null');
-        }
-        $this->container['nextcloudUserId'] = $nextcloudUserId;
-
-        return $this;
-    }
-
-    /**
-     * Gets server
-     *
-     * @return \IONOS\MailConfigurationAPI\Client\Model\MailServer|null
-     */
-    public function getServer()
-    {
-        return $this->container['server'];
-    }
-
-    /**
-     * Sets server
-     *
-     * @param \IONOS\MailConfigurationAPI\Client\Model\MailServer|null $server The configuration for smtp and imap servers.
-     *
-     * @return self
-     */
-    public function setServer($server)
-    {
-        if (is_null($server)) {
-            throw new \InvalidArgumentException('non-nullable server cannot be null');
-        }
-        $this->container['server'] = $server;
+        $this->container['users'] = $users;
 
         return $this;
     }
