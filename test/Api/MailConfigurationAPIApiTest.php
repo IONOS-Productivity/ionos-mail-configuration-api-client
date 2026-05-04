@@ -113,7 +113,7 @@ class MailConfigurationAPIApiTest extends TestCase
     {
         // Mock successful response
         $responseBody = '{"example": "data"}';
-        
+
         $this->mockHandler->append(new Response(200, [], $responseBody));
 
         // Setup test parameters
@@ -126,8 +126,8 @@ class MailConfigurationAPIApiTest extends TestCase
 
         // Verify the result
         $this->assertNotNull($result);
-        
-        
+
+
     }
 
     /**
@@ -140,7 +140,7 @@ class MailConfigurationAPIApiTest extends TestCase
     {
         // Mock successful response
         $responseBody = '{"example": "data"}';
-        
+
         $this->mockHandler->append(new Response(200, ['Content-Type' => 'application/json'], $responseBody));
 
         // Setup test parameters
@@ -345,7 +345,7 @@ class MailConfigurationAPIApiTest extends TestCase
     {
         // Mock successful response
         $responseBody = '[{"example": "data"}]';
-        
+
         $this->mockHandler->append(new Response(200, [], $responseBody));
 
         // Setup test parameters
@@ -357,10 +357,10 @@ class MailConfigurationAPIApiTest extends TestCase
 
         // Verify the result
         $this->assertNotNull($result);
-        
+
         $this->assertIsArray($result);
-        
-        
+
+
     }
 
     /**
@@ -373,7 +373,7 @@ class MailConfigurationAPIApiTest extends TestCase
     {
         // Mock successful response
         $responseBody = '[{"example": "data"}]';
-        
+
         $this->mockHandler->append(new Response(200, ['Content-Type' => 'application/json'], $responseBody));
 
         // Setup test parameters
@@ -423,7 +423,7 @@ class MailConfigurationAPIApiTest extends TestCase
     {
         // Mock successful response
         $responseBody = '{"example": "data"}';
-        
+
         $this->mockHandler->append(new Response(200, [], $responseBody));
 
         // Setup test parameters
@@ -436,8 +436,8 @@ class MailConfigurationAPIApiTest extends TestCase
 
         // Verify the result
         $this->assertNotNull($result);
-        
-        
+
+
     }
 
     /**
@@ -450,7 +450,7 @@ class MailConfigurationAPIApiTest extends TestCase
     {
         // Mock successful response
         $responseBody = '{"example": "data"}';
-        
+
         $this->mockHandler->append(new Response(200, ['Content-Type' => 'application/json'], $responseBody));
 
         // Setup test parameters
@@ -579,8 +579,9 @@ class MailConfigurationAPIApiTest extends TestCase
     public function testSetAppPassword()
     {
         // Mock successful response
-        $responseBody = '{"message": "success"}';$responseBody = '"test"';
-        
+        $responseBody = '{"message": "success"}';
+        $responseBody = '"test"';
+
         $this->mockHandler->append(new Response(200, [], $responseBody));
 
         // Setup test parameters
@@ -594,8 +595,8 @@ class MailConfigurationAPIApiTest extends TestCase
 
         // Verify the result
         $this->assertNotNull($result);
-        
-        
+
+
     }
 
     /**
@@ -607,8 +608,9 @@ class MailConfigurationAPIApiTest extends TestCase
     public function testSetAppPasswordWithHttpInfo()
     {
         // Mock successful response
-        $responseBody = '{"message": "success"}';$responseBody = '"test"';
-        
+        $responseBody = '{"message": "success"}';
+        $responseBody = '"test"';
+
         $this->mockHandler->append(new Response(200, ['Content-Type' => 'application/json'], $responseBody));
 
         // Setup test parameters
